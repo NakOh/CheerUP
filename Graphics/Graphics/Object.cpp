@@ -295,7 +295,7 @@ GameObject::GameObject(const char* path, bool objFile) {
 }
 
 void Transform::SetPosition(float x, float y, float z) {
-	int dx, dy, dz;
+	float dx, dy, dz;
 	dx = x - position.x;
 	dy = y - position.y;
 	dz = z - position.z;
