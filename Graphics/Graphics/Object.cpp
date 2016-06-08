@@ -15,6 +15,45 @@
 using namespace std;
 
 
+GLuint loadBMP_custom(const char * imagepath) {
+	unsigned char header[54];
+	unsigned int dataPos;
+	unsigned int width, height;
+	unsigned int imageSize;
+	unsigned char * data;
+	FILE * file = fopen(imagepath, "rb");
+	if (!file) { printf("Image could not be opened\n"); return 0; }
+	if (fread(header, 1, 54, file) != 54) { // If not 54 bytes read : problem
+		printf("Not a correct BMP file\n");
+		return false;
+	}
+	if (header[0] != 'B' || header[1] != 'M') {
+		printf("Not a correct BMP file\n");
+		return 0;
+	}
+	dataPos = *(int*)&(header[0x0A]);
+	imageSize = *(int*)&(header[0x22]);
+	width = *(int*)&(header[0x12]);
+	height = *(int*)&(header[0x16]);
+	if (imageSize == 0)    imageSize = width*height * 3;
+	if (dataPos == 0)      dataPos = 54;
+	data = new unsigned char[imageSize];
+	fread(data, 1, imageSize, file);
+	fclose(file);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//return(textureID);
+}
+
+
+/*
 Bitmap::Bitmap(const char * imagepath) {
 	loadBMP_custom(imagepath);
 }
@@ -23,6 +62,8 @@ Bitmap::Bitmap(const char * imagepath) {
 void Bitmap::registerImage() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 }
+
+
 
 GLuint Bitmap::loadBMP_custom(const char * imagepath) {
 	FILE * file = fopen(imagepath, "rb");
@@ -55,6 +96,7 @@ GLuint Bitmap::loadBMP_custom(const char * imagepath) {
 	//Everything is in memory now, the file can be closed
 	fclose(file);
 }
+*/
 
 Vertex::Vertex() {
 	pos = Vec4();
@@ -75,10 +117,22 @@ int ParseCount(char* strVertex) {
 }
 
 
+void ShaderID::InitBitmap() {
+	int textureNumber = 2;
+	texID = (GLuint*)malloc(sizeof(GLuint) * textureNumber);
+	glGenTextures(textureNumber, &texID[0]);
+
+	glBindTexture(GL_TEXTURE_2D, texID[0]);
+	loadBMP_custom("models/check.bmp");
+
+	glBindTexture(GL_TEXTURE_2D, texID[1]);
+	loadBMP_custom("models/flight.bmp");
+
+}
 
 void ShaderID::SetMetrices(Vec4& scale) {
-	for (int i = 0; i < 16; i++)	modelMatrix[i] = viewMatrix[i] = orthoMatrix[i] = scalelationMatrix[i] = projMatrix[i] = 0;
-	for (int i = 0; i < 4; i++)		modelMatrix[i * 5] = viewMatrix[i * 5] = orthoMatrix[i * 5] = 1;
+	for (int i = 0; i < 16; i++)	modelMatrix[i] = viewMatrix[i] = scalelationMatrix[i] = projMatrix[i] = 0;
+	for (int i = 0; i < 4; i++)		modelMatrix[i * 5] = viewMatrix[i * 5] = 1;
 	scalelationMatrix[0] = scale.x;
 	scalelationMatrix[5] = scale.y;
 	scalelationMatrix[10] = scale.z;
@@ -93,19 +147,14 @@ void ShaderID::SetMetrices(Vec4& scale) {
 }
 
 void ShaderID::ObjectInit(){
-	bitmap = Bitmap("models/flight.bmp");
+	//bitmap = Bitmap("models/flight.bmp");
 
 	textureID = glGetAttribLocation(mainID, "vertexTexture");
 	texCoordID = glGetUniformLocation(mainID, "tex");
 
 	glActiveTexture(GL_TEXTURE0);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, MAX_PIXEL, MAX_PIXEL, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-	bitmap.registerImage();
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	InitBitmap();
 
 	//각 버텍스마다 값이 같음.
 	//기본적인 프로젝션 아이디.
@@ -139,48 +188,42 @@ void ShaderID::Init() {
 	ObjectInit();
 }
 
-void ShaderID::Render(bool isPerspective,
-	Vec4& scale, GLfloat* X_axis_Rot, GLfloat* Y_axis_Rot, GLfloat* Z_axis_Rot,
-	Vec4& position, GLfloat* vertexPositionArray, GLfloat* colorData, GLfloat* vertexNormalArray, GLfloat* vertexCoordArray, Camera& cam, Light& light, int faceCount ){
+void ShaderID::Render(GameObject& obj, Camera& cam, Light& light, int textureNumber) {
 
-	SetMetrices(scale);
+	SetMetrices(obj.transform.scale);
 
 	glUseProgram(mainID);
 
 	glUniform1i(textureID, 0);
+	glBindTexture(GL_TEXTURE_2D, texID[textureNumber]);
 
 	glUniformMatrix4fv(modelMatrixID, 1, GL_FALSE, &modelMatrix[0]);
 	glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, &viewMatrix[0]);
-	if (isPerspective) glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projMatrix[0]);
-	else glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &orthoMatrix[0]);
-	glUniformMatrix4fv(xAxisRotationMatrixID, 1, GL_FALSE, &X_axis_Rot[0]);
-	glUniformMatrix4fv(yAxisRotationMatrixID, 1, GL_FALSE, &Y_axis_Rot[0]);
-	glUniformMatrix4fv(zAxisRotationMatrixID, 1, GL_FALSE, &Z_axis_Rot[0]);
+	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projMatrix[0]);
+	glUniformMatrix4fv(xAxisRotationMatrixID, 1, GL_FALSE, &obj._axisRotation._X_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(yAxisRotationMatrixID, 1, GL_FALSE, &obj._axisRotation._Y_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(zAxisRotationMatrixID, 1, GL_FALSE, &obj._axisRotation._Z_axis_RotationMatrix[0]);
 	glUniformMatrix4fv(scaleMatrixID, 1, GL_FALSE, &scalelationMatrix[0]);
-	//glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &Camera::X_axis_RotationMatrix[0]);
-	//glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &Camera::Y_axis_RotationMatrix[0]);
-	//glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &Camera::Z_axis_RotationMatrix[0]);
+
 	glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &cam.X_axis_RotationMatrix[0]);
 	glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &cam.Y_axis_RotationMatrix[0]);
 	glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &cam.Z_axis_RotationMatrix[0]);
 
-	glUniform4f(centerPositionID, position.x, position.y, position.z, 1);
+	glUniform4f(centerPositionID, obj.transform.position.x, obj.transform.position.y, obj.transform.position.z, 1);
 	glUniform4f(lightPositionID, light.pos.x, light.pos.y, light.pos.z, 1);
 	glUniform4f(cameraPositionID, cam.pos.x, cam.pos.y, cam.pos.z, 1);
 
 	glEnableVertexAttribArray(vertexPositionID);
 	glEnableVertexAttribArray(vertexColorID);
 	glEnableVertexAttribArray(vertexNormalID);
-	//texture
 	glEnableVertexAttribArray(textureID);
 
-	glVertexAttribPointer( vertexPositionID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&vertexPositionArray[0] );
-	glVertexAttribPointer( vertexColorID, 4, GL_FLOAT,	GL_FALSE, 0, (void*)&colorData[0] );
-	glVertexAttribPointer( vertexNormalID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&vertexNormalArray[0] );
-	//texture
-	glVertexAttribPointer(textureID, 2, GL_FLOAT, GL_FALSE, 0, (void*)&vertexCoordArray[0]);
+	glVertexAttribPointer(vertexPositionID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.arrays.vertexPositionArray[0]);
+	glVertexAttribPointer(vertexColorID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.model.colordata[0]);
+	glVertexAttribPointer(vertexNormalID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.arrays.vertexNormalArray[0]);
+	glVertexAttribPointer(textureID, 2, GL_FLOAT, GL_FALSE, 0, (void*)&obj.arrays.vertexCoordArray[0]);
 
-	glDrawArrays(GL_TRIANGLES, 0, faceCount * 3);
+	glDrawArrays(GL_TRIANGLES, 0, obj.model.faceCount * 3);
 
 	glDisableVertexAttribArray(vertexPositionID);
 	glDisableVertexAttribArray(vertexColorID);
@@ -444,9 +487,7 @@ void GameObject::InitData() {
 }
 
 void GameObject::Draw(Camera& cam, Light& light) {
-	shaderID.Render(true, transform.scale, _axisRotation._X_axis_RotationMatrix,
-		_axisRotation._Y_axis_RotationMatrix, _axisRotation._Z_axis_RotationMatrix, transform.position, arrays.vertexPositionArray,
-		model.colordata, arrays.vertexNormalArray, arrays.vertexCoordArray, cam, light, model.faceCount);
+	shaderID.Render(*this, cam, light, 0);
 }
 
 float GameObject::ParseStringToFloat(const char *s) {

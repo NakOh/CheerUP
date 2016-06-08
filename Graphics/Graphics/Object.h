@@ -6,7 +6,7 @@
 #include <fstream>
 
 
-#define MAX_PIXEL 1024
+GLuint loadBMP_custom(const char * imagepath);
 
 class Vertex {
 public:
@@ -14,6 +14,7 @@ public:
 	Vertex();
 };
 
+/*
 class Bitmap {
 public:
 
@@ -33,6 +34,9 @@ public:
 	void registerImage();
 
 };
+*/
+
+class GameObject;
 
 class ShaderID {
 protected:
@@ -46,11 +50,15 @@ protected:
 	GLfloat viewMatrix[16];
 	GLfloat scalelationMatrix[16];
 	GLfloat projMatrix[16];
-	GLfloat orthoMatrix[16];
 
 	void SetMetrices(Vec4& scale);
 	void ObjectInit();
-	Bitmap bitmap;
+
+
+	GLuint* texID;
+
+	void InitBitmap();
+	//sBitmap bitmap;
 public:
 
 	ShaderID() {}
@@ -73,13 +81,9 @@ public:
 	int texCoordID;
 
 	void Init();
-	void Render(bool isPerspective,
-		Vec4& scale, GLfloat* X_axis_Rot, GLfloat* Y_axis_Rot, GLfloat* Z_axis_Rot,
-		Vec4& position, GLfloat* vertexPositionArray, GLfloat* colorData, GLfloat* vertexNormalArray, GLfloat* vertexCoordArray, Camera& cam, Light& light, int faceCount);
+	void Render(GameObject& obj, Camera& cam, Light& light, int textureNumber);
 
 };
-
-class GameObject;
 
 class Transform {
 private:
