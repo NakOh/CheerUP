@@ -19,15 +19,17 @@ void myGLInit();
 void checkError();
 
 void dataLoad() {
-	obj = new GameObject("models/sphere.dat", false);
+	obj = new GameObject("models/flight.dat", true);
 	obj->transform.SetPosition(0, 0, 3);
+	obj->transform.Scalelation(2,2,2);
+	obj->transform.Rotation(100, 0, 0);
 }
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	rotddd += 0.001;
 	obj->Draw(camera, light);
-	obj->transform.Rotation(0, -0.0001, 0);
+	obj->transform.Rotation(0, -0.001, 0);
 	glutSwapBuffers();
 }
 

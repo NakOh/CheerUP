@@ -15,7 +15,16 @@
 using namespace std;
 
 
-GLuint ShaderID::loadBMP_custom(const char * imagepath) {
+Bitmap::Bitmap(const char * imagepath) {
+	loadBMP_custom(imagepath);
+}
+
+
+void Bitmap::registerImage() {
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+}
+
+GLuint Bitmap::loadBMP_custom(const char * imagepath) {
 	FILE * file = fopen(imagepath, "rb");
 	if (!file) { printf("Image could not be opened\n"); return 0; }
 
@@ -84,15 +93,14 @@ void ShaderID::SetMetrices(Vec4& scale) {
 }
 
 void ShaderID::ObjectInit(){
-	makeCheckImage();
-	GLuint image = loadBMP_custom("models/tree.bmp");
+	bitmap = Bitmap("models/flight.bmp");
 
 	textureID = glGetAttribLocation(mainID, "vertexTexture");
 	texCoordID = glGetUniformLocation(mainID, "tex");
 
 	glActiveTexture(GL_TEXTURE0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, MAX_PIXEL, MAX_PIXEL, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
+	bitmap.registerImage();
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -183,19 +191,6 @@ void ShaderID::Render(bool isPerspective,
 	glUseProgram(0);
 }
 
-void ShaderID::makeCheckImage() {
-	int i, j, c;
-	for (i = 0; i < MAX_PIXEL; i++) {
-		for (j = 0; j < MAX_PIXEL; j++) {
-			c = 255 - ((((i & 0x8) == 0) ^ ((j & 0x8)) == 0)) * 255;
-			checkImage[i][j][0] = c;
-			checkImage[i][j][1] = c;
-			checkImage[i][j][2] = c;
-			checkImage[i][j][3] = 1;
-		}
-	}
-}
-
 void GameObject::InitCenter() {
 	for (int i = 0; i < model.vertexCount; i++)	transform.position.Add(model.vertices[i].pos);
 	transform.position.Divide(model.vertexCount);
@@ -227,7 +222,7 @@ void GameObject::InitFace(FILE* f, bool objFile) {
 	if (objFile) {
 		for (int i = 0; i < model.faceCount; i++) {
 			fscanf(f, "%d/%d %d/%d %d/%d\n", &model.faces[i].p[0], &model.coords[i].p[0], &model.faces[i].p[1], &model.coords[i].p[1], &model.faces[i].p[2], &model.coords[i].p[2]);
-			printf("%d/%d %d/%d %d/%d\n", model.faces[i].p[0], model.coords[i].p[0], model.faces[i].p[1], model.coords[i].p[1], model.faces[i].p[2], model.coords[i].p[2]);
+			//printf("%d/%d %d/%d %d/%d\n", model.faces[i].p[0], model.coords[i].p[0], model.faces[i].p[1], model.coords[i].p[1], model.faces[i].p[2], model.coords[i].p[2]);
 			for (int j = 0; j < 3; j++) {
 				model.faces[i].p[j] --;
 				model.coords[i].p[j]--;
@@ -249,6 +244,7 @@ void GameObject::InitCoordData(FILE* f, bool objFile) {
 		int a, b, c;
 		for (int i = 0; i < model.textureCount; i++) {
 			fscanf(f, "%f %f %f\n", &model.coorddata[i].x, &model.coorddata[i].y, &model.coorddata[i].z);
+			printf("%f, %f, %f\n", model.coorddata[i].x, model.coorddata[i].y, model.coorddata[i].z);
 			model.coorddata[i].w = 1;
 			a = model.coorddata[i].x;
 			b = model.coorddata[i].y;
@@ -277,7 +273,6 @@ void GameObject::InitVertex(FILE* f) {
 
 GameObject::GameObject(const char* path, bool objFile) {
 
-	//makeCheckImage();
 	transform = Transform(this);
 
 	FILE* f = fopen(path, "rt");
@@ -295,14 +290,13 @@ GameObject::GameObject(const char* path, bool objFile) {
 }
 
 void Transform::SetPosition(float x, float y, float z) {
-	int dx, dy, dz;
+	float dx, dy, dz;
 	dx = x - position.x;
 	dy = y - position.y;
 	dz = z - position.z;
 	position.x += dx;
 	position.y += dy;
 	position.z += dz;
-
 
 	for (int i = 0; i < gameObject->model.vertexCount; i++) {
 		gameObject->model.vertices[i].pos.x += dx;
@@ -350,10 +344,8 @@ void GameObject::Setup_CoordinationToArray() {
 	for (int i = 0; i < model.faceCount; i++) {
 		for (int k = 0; k < 3; k++) {
 			int coordIndex = model.coords[i].p[k];
-			arrays.vertexCoordArray[(i * 3 + k) * 4 + 0] = model.coorddata[coordIndex].x;
-			arrays.vertexCoordArray[(i * 3 + k) * 4 + 1] = model.coorddata[coordIndex].y;
-			arrays.vertexCoordArray[(i * 3 + k) * 4 + 2] = model.coorddata[coordIndex].z;
-			arrays.vertexCoordArray[(i * 3 + k) * 4 + 3] = 1;
+			arrays.vertexCoordArray[(i * 3 + k) * 2 + 0] = model.coorddata[coordIndex].x;
+			arrays.vertexCoordArray[(i * 3 + k) * 2 + 1] = model.coorddata[coordIndex].y;
 		}
 	}
 }
@@ -392,29 +384,6 @@ void Transform::Rotation(float x, float y, float z) {
 	gameObject->_axisRotation._Z_axis_RotationMatrix[5] = cos(rotation.z);
 
 }
-
-/*
-void Camera::Rotation(float x, float y, float z) {
-	direction.x += x;
-	direction.y += y;
-	direction.z += z;
-	X_axis_RotationMatrix[5] = cos(direction.x);
-	X_axis_RotationMatrix[6] = sin(direction.x);
-	X_axis_RotationMatrix[9] = -sin(direction.x);
-	X_axis_RotationMatrix[10] = cos(direction.x);
-
-	Y_axis_RotationMatrix[0] = cos(direction.y);
-	Y_axis_RotationMatrix[2] = -sin(direction.y);
-	Y_axis_RotationMatrix[8] = sin(direction.y);
-	Y_axis_RotationMatrix[10] = cos(direction.y);
-
-	Z_axis_RotationMatrix[0] = cos(direction.z);
-	Z_axis_RotationMatrix[1] = sin(direction.z);
-	Z_axis_RotationMatrix[4] = -sin(direction.z);
-	Z_axis_RotationMatrix[5] = cos(direction.z);
-
-}
-*/
 
 void GameObject::Setup_NormalVector() {
 	Setup_FaceNormalVector();

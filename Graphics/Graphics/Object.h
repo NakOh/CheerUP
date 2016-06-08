@@ -6,12 +6,32 @@
 #include <fstream>
 
 
-#define MAX_PIXEL 64
+#define MAX_PIXEL 1024
 
 class Vertex {
 public:
 	Vec4 pos, normal, sum_normal, color;
 	Vertex();
+};
+
+class Bitmap {
+public:
+
+	// Data read from the header of the BMP file
+	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
+	unsigned int dataPos;     // Position in the file where the actual data begins
+	unsigned int width, height;
+	unsigned int imageSize;   // = width*height*3
+							  // Actual RGB data
+	unsigned char * data;
+
+	Bitmap() {}
+	Bitmap(const char * imagepath);
+
+	GLuint loadBMP_custom(const char * imagepath);
+
+	void registerImage();
+
 };
 
 class ShaderID {
@@ -30,7 +50,10 @@ protected:
 
 	void SetMetrices(Vec4& scale);
 	void ObjectInit();
+	Bitmap bitmap;
 public:
+
+	ShaderID() {}
 	int mainID; // Shader Program ID;
 	int modelMatrixID; // Shader ModelMatrix ID;
 	int viewMatrixID; // Shader ViewMatrix ID;
@@ -48,23 +71,12 @@ public:
 
 	int textureID;
 	int texCoordID;
-	GLubyte checkImage[MAX_PIXEL][MAX_PIXEL][4];
-	void makeCheckImage();
-	GLfloat coordArray[MAX_PIXEL * MAX_PIXEL * 72];
 
 	void Init();
 	void Render(bool isPerspective,
 		Vec4& scale, GLfloat* X_axis_Rot, GLfloat* Y_axis_Rot, GLfloat* Z_axis_Rot,
 		Vec4& position, GLfloat* vertexPositionArray, GLfloat* colorData, GLfloat* vertexNormalArray, GLfloat* vertexCoordArray, Camera& cam, Light& light, int faceCount);
 
-	GLuint loadBMP_custom(const char * imagepath);
-	// Data read from the header of the BMP file
-	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
-	unsigned int dataPos;     // Position in the file where the actual data begins
-	unsigned int width, height;
-	unsigned int imageSize;   // = width*height*3
-							  // Actual RGB data
-	unsigned char * data;
 };
 
 class GameObject;
