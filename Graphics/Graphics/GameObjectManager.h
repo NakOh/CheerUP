@@ -14,12 +14,10 @@
 
 class Manager {
 private:
-	LinkedList *list;
-	List *pool;
+	LinkedList<GameObject> *list;
 public:
 	Manager();
 	void Add(GameObject* obj);
-	void Add(const char* path, bool objFile);
 	void Render();
 	void Update();
 	int getObjectSize();

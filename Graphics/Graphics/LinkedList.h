@@ -1,29 +1,42 @@
 #pragma once
 
 class GameObject;
-class Node {
+
+template <class T>
+class Node{
+private:
+	T* data;
+	bool isData;
 public:
 	Node* prev;
 	Node* next;
 
-	GameObject* data;
+	void remove();
+
+	bool hasData();
+	void set(T* go);
+	T* get();
+	void deleteData();
+	Node();
+	~Node();
+	Node(T* go);
 };
 
-class List {
+
+template <class T>
+class LinkedList {
 public:
-	Node* head;
-};
-
-class LinkedList
-{
-private:
 	int size;
+	Node<T>* head;
+	LinkedList();
+	~LinkedList();
+	//num 번째 Node* 뒤에 붙인다.
+	void add(int num, T* obj);
+	void addFront(T* obj);
+	void addBack(T* obj);
+	Node<T>* at(int num);
 
-public:
-	List* createList();
-	void insertNodeAfter(Node* node, GameObject* data);
-	int getSize();
-	void removeNode(Node* node, bool deleteData);
-	void removeList(List* list, bool deleteData);
+	//0 부터 시작.
+	void remove(int at);
 };
 
