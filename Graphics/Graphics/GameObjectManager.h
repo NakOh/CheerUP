@@ -10,16 +10,19 @@
 #include <math.h>
 #include <stdlib.h>
 #include "vector" 
+#include "LinkedList.h"
 
 class Manager {
 private:
+	LinkedList *list;
+	List *pool;
 public:
-	std::vector<GameObject> pool;
 	Manager();
 	void Add(GameObject* obj);
 	void Add(const char* path, bool objFile);
 	void Render();
 	void Update();
+	int getObjectSize();
 
 };
 

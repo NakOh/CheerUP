@@ -119,6 +119,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="shader.hpp" />

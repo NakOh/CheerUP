@@ -42,31 +42,46 @@ void draw() {
 }
 
 void KeyBoard(unsigned char key, int x, int y) {
+
 	switch (key) {
 	case 'w':
+		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y + 0.1f, obj->transform.position.z );
 		//Camera::pos.z += 0.1f;
 		break;
 	case 'a':
+		obj->transform.SetPosition(obj->transform.position.x - 0.1f, obj->transform.position.y, obj->transform.position.z);
 		//Camera::pos.x -= 0.1f;
 		break;
 	case 's':
+		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y - 0.1f, obj->transform.position.z);
 		//Camera::pos.z -= 0.1f;
 		break;
 	case 'd':
+		obj->transform.SetPosition(obj->transform.position.x + 0.1f, obj->transform.position.y, obj->transform.position.z);
 		//Camera::pos.x += 0.1f;
 		break;
 	case 'r':
+		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z + 0.1f);
 		//Camera::pos.y += 0.1f;
 		break;
 	case 'f':
+		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z - 0.1f);
 		//Camera::pos.y -= 0.1f;
 		break;
 
 	case 'q'://카메라의 y 축 회전
 		//Camera::Rotation(0, 0.1f, 0);
 		break;
+
 	case 'e':
 		//Camera::Rotation(0, -0.1f, 0);
+		break;
+	case ' ':
+		//스페이스바를 누르면 총알을 만들어서 오브젝트 리스트에 추가하자.
+		GameObject* bullet = new GameObject("models/flight.dat", camera, light);		
+		bullet->transform.SetPosition(1, 0, 3);		
+		//objectManager.Add(bullet);
+		
 		break;
 	}
 	//printf("cam pos x, y, z : %.6f, %.6f, %.6f\n", Camera::pos.x, Camera::pos.y, Camera::pos.z);
