@@ -86,6 +86,7 @@ void LinkedList::add(int num, GameObject* obj) {
 LinkedList::LinkedList() {
 	size = 0;
 	this->head = nullptr;
+	printf("Test");
 }
 
 
@@ -111,6 +112,7 @@ void LinkedList::addBack(GameObject* obj) {
 	Node* newNode = new Node(obj);
 	target->next = newNode;
 	newNode->prev = target;
+	size++;
 }
 
 

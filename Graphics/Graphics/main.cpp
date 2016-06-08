@@ -4,6 +4,7 @@
 #include "GameObjectManager.h"
 
 GameObject* obj;
+Manager manager;
 
 Light* light;
 Camera* camera;
@@ -24,6 +25,7 @@ void dataLoad() {
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
+	manager.Add(obj);
 }
 
 void render() {
@@ -38,7 +40,8 @@ void update() {
 }
 
 void draw() {
-	obj->draw();
+	//obj->draw();
+	manager.Render();
 }
 
 void KeyBoard(unsigned char key, int x, int y) {
@@ -114,6 +117,7 @@ void myGLInit() {
 	light = new Light();
 	camera = new Camera();
 	time = Time();
+//	manager = Manager();
 	
 	light->Init(8, 20, -15);
 	camera->Init();
