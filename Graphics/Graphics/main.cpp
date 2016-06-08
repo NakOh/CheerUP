@@ -3,34 +3,42 @@
 
 #include "GameObjectManager.h"
 
-float rotddd = 0;
-int g_timeDelta = 0, g_prevTime = 0;
 GameObject* obj;
 
 Light* light;
 Camera* camera;
+Time time;
 
 void render();
 void idle();
 void changeSize(int width, int height);
 void dataLoad();
 void myGLInit();
+void update();
+void draw();
 
 void checkError();
 
 void dataLoad() {
 	obj = new GameObject("models/flight.dat", camera, light);
 	obj->transform.SetPosition(0, 0, 3);
-	obj->transform.Scalelation(2,2,2);
+	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
 }
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	rotddd += 0.001;
-	obj->Draw();
-	obj->transform.Rotation(0, -0.001, 0);
+	update();
+	draw();
 	glutSwapBuffers();
+}
+
+void update() {
+	obj->transform.Rotation(0, -0.001 * time.deltaTime, 0);
+}
+
+void draw() {
+	obj->draw();
 }
 
 void KeyBoard(unsigned char key, int x, int y) {
@@ -68,10 +76,9 @@ void main(int argc, char* argv[]){
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowSize(512, 512);
-	glutCreateWindow("Shader");
+	glutInitWindowSize(1024, 768);
+	glutCreateWindow("Grapics");
 	
-
 	myGLInit();
 	dataLoad();
 
@@ -91,6 +98,7 @@ void checkError() {
 void myGLInit() {
 	light = new Light();
 	camera = new Camera();
+	time = Time();
 	light->Init(8, 20, -15);
 	camera->Init();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -100,7 +108,6 @@ void myGLInit() {
 		printf("asdf");
 	}
 	glutKeyboardFunc(KeyBoard);
-
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
@@ -112,20 +119,12 @@ void myGLInit() {
 }
 
 void idle() {
-	int currentTime = glutGet(GLUT_ELAPSED_TIME);
-	g_timeDelta = currentTime - g_prevTime;
-	g_prevTime = currentTime;
+	time.update();
 	glutPostRedisplay();
 }
 
 void changeSize(int width, int height) {
-
-	GLfloat aspectRatio = (GLfloat)width / (GLfloat)height;
-
+	GLfloat aspectRatio = (GLfloat)height / (GLfloat)width;
 	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluPerspective(90.f, aspectRatio, 10.f, 200.f);
-
+	obj->setAspect(aspectRatio);
 }

@@ -1,5 +1,8 @@
 #ifndef _LIGHT_H_
 #define _LIGHT_H_
+
+#include <GL\glew.h>
+#include <GL\glut.h>
 #include "Matrix.h"
 #include <math.h>
 
@@ -34,6 +37,15 @@ public:
 	float Z_axis_RotationMatrix[16];
 	void Rotation(float x, float y, float z);
 };
+
+class Time {
+private:
+	int privTime = 0;
+public:
+	int deltaTime = 0;
+	void update();
+};
+
 //*/
 
 

@@ -34,6 +34,14 @@ void CamRotation(float x, float y, float z) {
 }
 */
 //*
+
+void Time::update() {
+	int currentTime = glutGet(GLUT_ELAPSED_TIME);
+	deltaTime = currentTime - privTime;
+	privTime = currentTime;
+}
+
+
 void Light::Init(float x, float y, float z) {
 	pos = Vec4(x, y, z, 1);
 	pos.w = 1;

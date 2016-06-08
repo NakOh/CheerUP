@@ -1,6 +1,4 @@
 #pragma once
-#include <GL\glew.h>
-#include <GL\glut.h>
 #include "Matrix.h"
 #include "Light.h"
 #include <fstream>
@@ -40,7 +38,7 @@ class GameObject;
 
 class ShaderID {
 protected:
-	float aspect = 1.3;
+	float aspect = 1024/768;
 	float fovy = 60;
 	float far = 3000;
 	float near = 0;
@@ -60,7 +58,6 @@ protected:
 	void InitBitmap();
 	//sBitmap bitmap;
 public:
-
 	ShaderID() {}
 	int mainID; // Shader Program ID;
 	int modelMatrixID; // Shader ModelMatrix ID;
@@ -82,7 +79,7 @@ public:
 
 	void Init();
 	void Render(GameObject& obj, int textureNumber);
-
+	void setAspect(float as);
 };
 
 class Transform {
@@ -145,6 +142,7 @@ public:
 class GameObject {
 private:
 	ShaderID shaderID;
+
 	//모든 데이터를 처음에 초기화
 	void InitData();
 
@@ -193,6 +191,6 @@ public:
 	Transform transform;
 	GameObject(const char* path, Camera* camera, Light* light);
 	AxisMatrix _axisRotation;
-	void Draw();
-
+	void draw();
+	void setAspect(float as);
 };

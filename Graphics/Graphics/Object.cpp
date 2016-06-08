@@ -187,6 +187,14 @@ void ShaderID::Render(GameObject& obj, int textureNumber) {
 	glUseProgram(0);
 }
 
+void ShaderID::setAspect(float as) {
+	aspect = as;
+}
+
+void GameObject::setAspect(float as) {
+	shaderID.setAspect(as);
+}
+
 void GameObject::InitCenter() {
 	for (int i = 0; i < model.vertexCount; i++)	transform.position.Add(model.vertices[i].pos);
 	transform.position.Divide(model.vertexCount);
@@ -428,8 +436,8 @@ void GameObject::InitData() {
 	Setup_NormalVector();
 }
 
-void GameObject::Draw() {
-	shaderID.Render(*this, 0);
+void GameObject::draw() {
+	shaderID.Render(*this, 1);
 }
 
 float GameObject::ParseStringToFloat(const char *s) {
