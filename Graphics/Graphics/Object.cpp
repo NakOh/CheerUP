@@ -49,54 +49,7 @@ GLuint loadBMP_custom(const char * imagepath) {
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//return(textureID);
 }
-
-
-/*
-Bitmap::Bitmap(const char * imagepath) {
-	loadBMP_custom(imagepath);
-}
-
-
-void Bitmap::registerImage() {
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-}
-
-
-
-GLuint Bitmap::loadBMP_custom(const char * imagepath) {
-	FILE * file = fopen(imagepath, "rb");
-	if (!file) { printf("Image could not be opened\n"); return 0; }
-
-	if (fread(header, 1, 54, file) != 54) { // If not 54 bytes read : problem
-		printf("Not a correct BMP file\n");
-		return 0;
-	}
-
-	if (header[0] != 'B' || header[1] != 'M') {
-		printf("Not a correct BMP file\n");
-		return 0;
-	}
-
-	dataPos = *(int*)&(header[0x0A]);
-	imageSize = *(int*)&(header[0x22]);
-	width = *(int*)&(header[0x12]);
-	height = *(int*)&(header[0x16]);
-
-	if (imageSize == 0)    imageSize = width*height * 3; // 3 : one byte for each Red, Green and Blue component
-	if (dataPos == 0)      dataPos = 54; // The BMP header is done that way
-
-										 // Create a buffer
-	data = new unsigned char[imageSize];
-
-	// Read the actual data from the file into the buffer
-	fread(data, 1, imageSize, file);
-
-	//Everything is in memory now, the file can be closed
-	fclose(file);
-}
-*/
 
 Vertex::Vertex() {
 	pos = Vec4();
@@ -188,7 +141,7 @@ void ShaderID::Init() {
 	ObjectInit();
 }
 
-void ShaderID::Render(GameObject& obj, Camera& cam, Light& light, int textureNumber) {
+void ShaderID::Render(GameObject& obj, int textureNumber) {
 
 	SetMetrices(obj.transform.scale);
 
@@ -205,13 +158,13 @@ void ShaderID::Render(GameObject& obj, Camera& cam, Light& light, int textureNum
 	glUniformMatrix4fv(zAxisRotationMatrixID, 1, GL_FALSE, &obj._axisRotation._Z_axis_RotationMatrix[0]);
 	glUniformMatrix4fv(scaleMatrixID, 1, GL_FALSE, &scalelationMatrix[0]);
 
-	glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &cam.X_axis_RotationMatrix[0]);
-	glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &cam.Y_axis_RotationMatrix[0]);
-	glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &cam.Z_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->X_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->Y_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->Z_axis_RotationMatrix[0]);
 
 	glUniform4f(centerPositionID, obj.transform.position.x, obj.transform.position.y, obj.transform.position.z, 1);
-	glUniform4f(lightPositionID, light.pos.x, light.pos.y, light.pos.z, 1);
-	glUniform4f(cameraPositionID, cam.pos.x, cam.pos.y, cam.pos.z, 1);
+	glUniform4f(lightPositionID, obj.light->pos.x, obj.light->pos.y, obj.light->pos.z, 1);
+	glUniform4f(cameraPositionID, obj.camera->pos.x, obj.camera->pos.y, obj.camera->pos.z, 1);
 
 	glEnableVertexAttribArray(vertexPositionID);
 	glEnableVertexAttribArray(vertexColorID);
@@ -254,50 +207,39 @@ void GameObject::InitGPUId() {
 	//gouraudID.Init();
 }
 
-void GameObject::InitFace(FILE* f, bool objFile) {
+void GameObject::InitFace(FILE* f) {
 	//의미없이 셋을 날림.
 	char ssss[100];
-	for (int i = 0; i < 3; i++)	
+	for (int i = 0; i < 3; i++)
 		fscanf(f, "%s", &ssss);
 	model.faceCount = ParseStringToInt(ssss);
 	model.faces = new Point4[model.faceCount];
 	model.coords = new Point4[model.faceCount];
-	if (objFile) {
-		for (int i = 0; i < model.faceCount; i++) {
-			fscanf(f, "%d/%d %d/%d %d/%d\n", &model.faces[i].p[0], &model.coords[i].p[0], &model.faces[i].p[1], &model.coords[i].p[1], &model.faces[i].p[2], &model.coords[i].p[2]);
-			//printf("%d/%d %d/%d %d/%d\n", model.faces[i].p[0], model.coords[i].p[0], model.faces[i].p[1], model.coords[i].p[1], model.faces[i].p[2], model.coords[i].p[2]);
-			for (int j = 0; j < 3; j++) {
-				model.faces[i].p[j] --;
-				model.coords[i].p[j]--;
-			}
+	for (int i = 0; i < model.faceCount; i++) {
+		fscanf(f, "%d/%d %d/%d %d/%d\n", &model.faces[i].p[0], &model.coords[i].p[0], &model.faces[i].p[1], &model.coords[i].p[1], &model.faces[i].p[2], &model.coords[i].p[2]);
+		//printf("%d/%d %d/%d %d/%d\n", model.faces[i].p[0], model.coords[i].p[0], model.faces[i].p[1], model.coords[i].p[1], model.faces[i].p[2], model.coords[i].p[2]);
+		for (int j = 0; j < 3; j++) {
+			model.faces[i].p[j] --;
+			model.coords[i].p[j]--;
 		}
 	}
-	else
-		for (int i = 0; i < model.faceCount; i++)	fscanf(f, "%d %d %d\n", &model.faces[i].p[0], &model.faces[i].p[1], &model.faces[i].p[2]);
 }
 
-void GameObject::InitCoordData(FILE* f, bool objFile) {
-	//의미없이 셋을 날림.
-	if (objFile) {
-		char ssss[100];
-		for (int i = 0; i < 3; i++)	
-			fscanf(f, "%s", &ssss);
-		model.textureCount = ParseStringToInt(ssss);
-		model.coorddata = new Vec4[model.textureCount];
-		int a, b, c;
-		for (int i = 0; i < model.textureCount; i++) {
-			fscanf(f, "%f %f %f\n", &model.coorddata[i].x, &model.coorddata[i].y, &model.coorddata[i].z);
-			printf("%f, %f, %f\n", model.coorddata[i].x, model.coorddata[i].y, model.coorddata[i].z);
-			model.coorddata[i].w = 1;
-			a = model.coorddata[i].x;
-			b = model.coorddata[i].y;
-			c = model.coorddata[i].z;
-			a = b = c = 0;
-		}
-	}
-	else {
-		model.coorddata = new Vec4[model.vertexCount * 3];
-		for (int i = 0; i < model.vertexCount * 3; i++)	model.coorddata[i].x = model.coorddata[i].y = model.coorddata[i].z = 0;
+void GameObject::InitCoordData(FILE* f) {
+	char ssss[100];
+	for (int i = 0; i < 3; i++)
+		fscanf(f, "%s", &ssss);
+	model.textureCount = ParseStringToInt(ssss);
+	model.coorddata = new Vec4[model.textureCount];
+	int a, b, c;
+	for (int i = 0; i < model.textureCount; i++) {
+		fscanf(f, "%f %f %f\n", &model.coorddata[i].x, &model.coorddata[i].y, &model.coorddata[i].z);
+		printf("%f, %f, %f\n", model.coorddata[i].x, model.coorddata[i].y, model.coorddata[i].z);
+		model.coorddata[i].w = 1;
+		a = model.coorddata[i].x;
+		b = model.coorddata[i].y;
+		c = model.coorddata[i].z;
+		a = b = c = 0;
 	}
 }
 
@@ -314,15 +256,17 @@ void GameObject::InitVertex(FILE* f) {
 	}
 }
 
-GameObject::GameObject(const char* path, bool objFile) {
+GameObject::GameObject(const char* path, Camera* camera, Light* light) {
 
 	transform = Transform(this);
+	this->camera = camera;
+	this->light = light;
 
 	FILE* f = fopen(path, "rt");
 
 	InitVertex(f);
-	InitCoordData(f, objFile);
-	InitFace(f, objFile);
+	InitCoordData(f);
+	InitFace(f);
 	fclose(f);
 
 	InitColor();
@@ -486,8 +430,8 @@ void GameObject::InitData() {
 	Setup_NormalVector();
 }
 
-void GameObject::Draw(Camera& cam, Light& light) {
-	shaderID.Render(*this, cam, light, 0);
+void GameObject::Draw() {
+	shaderID.Render(*this, 0);
 }
 
 float GameObject::ParseStringToFloat(const char *s) {

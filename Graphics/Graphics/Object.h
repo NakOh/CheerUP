@@ -81,7 +81,7 @@ public:
 	int texCoordID;
 
 	void Init();
-	void Render(GameObject& obj, Camera& cam, Light& light, int textureNumber);
+	void Render(GameObject& obj, int textureNumber);
 
 };
 
@@ -145,8 +145,6 @@ public:
 class GameObject {
 private:
 	ShaderID shaderID;
-
-
 	//모든 데이터를 처음에 초기화
 	void InitData();
 
@@ -160,10 +158,10 @@ private:
 	void InitGPUId();
 
 	//file 포인터를 받고 매핑을 초기화
-	void InitCoordData(FILE* f, bool objFile);
+	void InitCoordData(FILE* f);
 
 	//file 포인터를 받고 면을 초기화
-	void InitFace(FILE* f, bool objFile);
+	void InitFace(FILE* f);
 
 	//file 포인터를 받고 점을 초기화
 	void InitVertex(FILE* f);
@@ -187,11 +185,14 @@ private:
 	int ParseStringToInt(const char *s);
 
 public:
+	Camera* camera;
+	Light* light;
+
 	Model::Arrays arrays;
 	Model::Object model;
 	Transform transform;
-	GameObject(const char* path, bool objFile);
+	GameObject(const char* path, Camera* camera, Light* light);
 	AxisMatrix _axisRotation;
-	void Draw(Camera& cam, Light& light);
+	void Draw();
 
 };

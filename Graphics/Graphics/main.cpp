@@ -7,8 +7,8 @@ float rotddd = 0;
 int g_timeDelta = 0, g_prevTime = 0;
 GameObject* obj;
 
-Light light;
-Camera camera;
+Light* light;
+Camera* camera;
 
 void render();
 void idle();
@@ -19,7 +19,7 @@ void myGLInit();
 void checkError();
 
 void dataLoad() {
-	obj = new GameObject("models/flight.dat", true);
+	obj = new GameObject("models/flight.dat", camera, light);
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2,2,2);
 	obj->transform.Rotation(100, 0, 0);
@@ -28,7 +28,7 @@ void dataLoad() {
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	rotddd += 0.001;
-	obj->Draw(camera, light);
+	obj->Draw();
 	obj->transform.Rotation(0, -0.001, 0);
 	glutSwapBuffers();
 }
@@ -89,10 +89,10 @@ void checkError() {
 }
 
 void myGLInit() {
-	light = Light();
-	camera = Camera();
-	light.Init(8, 20, -15);
-	camera.Init();
+	light = new Light();
+	camera = new Camera();
+	light->Init(8, 20, -15);
+	camera->Init();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	int glewtest = glewInit();
