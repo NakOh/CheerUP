@@ -217,7 +217,6 @@ void GameObject::InitFace(FILE* f) {
 	model.coords = new Point4[model.faceCount];
 	for (int i = 0; i < model.faceCount; i++) {
 		fscanf(f, "%d/%d %d/%d %d/%d\n", &model.faces[i].p[0], &model.coords[i].p[0], &model.faces[i].p[1], &model.coords[i].p[1], &model.faces[i].p[2], &model.coords[i].p[2]);
-		//printf("%d/%d %d/%d %d/%d\n", model.faces[i].p[0], model.coords[i].p[0], model.faces[i].p[1], model.coords[i].p[1], model.faces[i].p[2], model.coords[i].p[2]);
 		for (int j = 0; j < 3; j++) {
 			model.faces[i].p[j] --;
 			model.coords[i].p[j]--;
@@ -234,7 +233,6 @@ void GameObject::InitCoordData(FILE* f) {
 	int a, b, c;
 	for (int i = 0; i < model.textureCount; i++) {
 		fscanf(f, "%f %f %f\n", &model.coorddata[i].x, &model.coorddata[i].y, &model.coorddata[i].z);
-		printf("%f, %f, %f\n", model.coorddata[i].x, model.coorddata[i].y, model.coorddata[i].z);
 		model.coorddata[i].w = 1;
 		a = model.coorddata[i].x;
 		b = model.coorddata[i].y;
