@@ -14,7 +14,7 @@
 
 class Manager {
 private:
-	LinkedList<GameObject> *list;
+	LinkedList *list;
 public:
 	Manager();
 	void Add(GameObject* obj);

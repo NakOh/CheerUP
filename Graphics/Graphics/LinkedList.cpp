@@ -4,25 +4,25 @@
 
 
 
-template <class T>
-bool Node<T>::hasData() {
+
+bool Node::hasData() {
 	return isData;
 }
 
-template <class T>
-void Node<T>::set(T* go) {
+
+void Node::set(GameObject* go) {
 	isData = true;
 	data = go;
 }
 
-template <class T>
-T* Node<T>::get() {
+
+GameObject* Node::get() {
 	return data;
 }
 
 
-template <class T>
-Node<T>::Node() {
+
+Node::Node() {
 	isData = false;
 	prev = nullptr;
 	next = nullptr;
@@ -30,8 +30,8 @@ Node<T>::Node() {
 }
 
 
-template <class T>
-Node<T>::Node(T* go) {
+
+Node::Node(GameObject* go) {
 	isData = true;
 	prev = nullptr;
 	next = nullptr;
@@ -39,16 +39,16 @@ Node<T>::Node(T* go) {
 }
 
 
-template <class T>
-void Node<T>::deleteData() {
+
+void Node::deleteData() {
 	if (isData)	delete data;
 }
 
 
-template <class T>
-void Node<T>::remove() {
-	Node<T>* prevN = nullptr;
-	Node<T>* nextN = nullptr;
+
+void Node::remove() {
+	Node* prevN = nullptr;
+	Node* nextN = nullptr;
 	if (prev != nullptr) {
 		prevN = prev;
 		prev->next = nullptr;
@@ -65,16 +65,16 @@ void Node<T>::remove() {
 }
 
 
-template <class T>
-Node<T>::~Node() {
+
+Node::~Node() {
 	remove();
 }
 
-template <class T>
-void LinkedList<T>::add(int num, T* obj) {
+
+void LinkedList::add(int num, GameObject* obj) {
 	if (num >= size || num < 0)	return;
-	Node<T>* target = at(num);
-	Node<T>* newN = new Node(obj);
+	Node* target = at(num);
+	Node* newN = new Node(obj);
 	if(target->next != nullptr)
 	newN->next = target->next;
 	newN->prev = target;
@@ -82,51 +82,51 @@ void LinkedList<T>::add(int num, T* obj) {
 	size++;
 }
 
-template <class T>
-LinkedList<T>::LinkedList() {
+
+LinkedList::LinkedList() {
 	size = 0;
 	this->head = nullptr;
 }
 
-template <class T>
-LinkedList<T>::~LinkedList() {
+
+LinkedList::~LinkedList() {
 	int count = size;
 	for (int i = 0; i < count; i++)	remove(0);
 }
 
-template <class T>
-void LinkedList<T>::addFront(T* obj) {
-	Node<T>* newNode = new Node<T>(obj);
+
+void LinkedList::addFront(GameObject* obj) {
+	Node* newNode = new Node(obj);
 	if(this->head != nullptr)	newNode->next = this->head;
 	else	newNode->prev = nullptr;
 	this->head = newNode;
 	size++;
 }
 
-template <class T>
-void LinkedList<T>::addBack(T* obj) {
-	Node<T>* target = head;
+
+void LinkedList::addBack(GameObject* obj) {
+	Node* target = head;
 	while (target->next != nullptr)
 		target = target->next;
-	Node<T>* newNode = new Node<T>(obj);
+	Node* newNode = new Node(obj);
 	target->next = newNode;
 	newNode->prev = target;
 }
 
-template <class T>
-Node<T>* LinkedList<T>::at(int num) {
-	if (num >= size || num < 0)	return new Node<T>();
-	Node<T>* target = head;
+
+Node* LinkedList::at(int num) {
+	if (num >= size || num < 0)	return new Node();
+	Node* target = head;
 	for (int i = 0; i < num; i++)
 		target = target->next;
 	return target;
 }
 
-template <class T>
-void LinkedList<T>::remove(int at) {
-	if (at >= size || num < 0)	return;
 
-	Node<T>* target = head;
+void LinkedList::remove(int at) {
+	if (at >= size || at < 0)	return;
+
+	Node* target = head;
 
 	for (int i = 0; i < at; i++)
 		target = target->next;

@@ -1,11 +1,12 @@
 #pragma once
-
+#ifndef __LINKEDLIST_H__
+#define __LINKEDLIST_H__
 class GameObject;
 
-template <class T>
+
 class Node{
 private:
-	T* data;
+	GameObject* data;
 	bool isData;
 public:
 	Node* prev;
@@ -14,29 +15,30 @@ public:
 	void remove();
 
 	bool hasData();
-	void set(T* go);
-	T* get();
+	void set(GameObject* go);
+	GameObject* get();
 	void deleteData();
 	Node();
 	~Node();
-	Node(T* go);
+	Node(GameObject* go);
 };
 
 
-template <class T>
+
 class LinkedList {
 public:
 	int size;
-	Node<T>* head;
+	Node* head;
 	LinkedList();
 	~LinkedList();
 	//num 번째 Node* 뒤에 붙인다.
-	void add(int num, T* obj);
-	void addFront(T* obj);
-	void addBack(T* obj);
-	Node<T>* at(int num);
+	void add(int num, GameObject* obj);
+	void addFront(GameObject* obj);
+	void addBack(GameObject* obj);
+	Node* at(int num);
 
 	//0 부터 시작.
 	void remove(int at);
 };
 
+#endif

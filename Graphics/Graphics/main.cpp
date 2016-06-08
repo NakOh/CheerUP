@@ -114,6 +114,7 @@ void myGLInit() {
 	light = new Light();
 	camera = new Camera();
 	time = Time();
+	
 	light->Init(8, 20, -15);
 	camera->Init();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

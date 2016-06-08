@@ -2,6 +2,7 @@
 
 
 Manager::Manager() {
+	list = new LinkedList();
 	 //pool = list->createList();	
 }
 void Manager::Add(GameObject* obj) {
@@ -14,7 +15,7 @@ void Manager::Render() {
 	//}
 }
 void Manager::Update() {
-
+	list->addFront(new GameObject("models/flight.dat", new Camera(), new Light()));
 }
 
 int Manager::getObjectSize() {
