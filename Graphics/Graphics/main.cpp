@@ -1,12 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 
 #include "GameObjectManager.h"
 
-GameObjectManager manager;
+GameObjectManager* manager;
 
-Light* light;
-Camera* camera;
 Time time;
 
 void render();
@@ -29,11 +25,12 @@ void render() {
 }
 
 void update() {
-	manager.update(time.deltaTime);
+	if(manager != nullptr)	manager->update(time.deltaTime);
 }
 
 void draw() {	
-	manager.render();
+	if (manager != nullptr)
+		manager->render();
 }
 
 void KeyBoard(unsigned char key, int x, int y) {
@@ -73,7 +70,7 @@ void KeyBoard(unsigned char key, int x, int y) {
 		break;
 	case ' ':
 		//스페이스바를 누르면 총알을 만들어서 오브젝트 리스트에 추가하자.
-		manager.addBullet();
+		if (manager != nullptr)	manager->addBullet();
 		break;
 	}
 	//printf("cam pos x, y, z : %.6f, %.6f, %.6f\n", Camera::pos.x, Camera::pos.y, Camera::pos.z);
@@ -103,19 +100,15 @@ void checkError() {
 }
 
 void myGLInit() {
-	light = new Light();
-	camera = new Camera();
 	time = Time();
 
-	light->Init(8, 20, -15);
-	camera->Init();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	int glewtest = glewInit();
 	if (glewtest != GLEW_OK)		printf("asdf");
 	glutKeyboardFunc(KeyBoard);
 
-	manager = GameObjectManager(camera, light);
+	manager = new GameObjectManager();
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);

@@ -22,11 +22,13 @@ private:
 	LinkedList *myBullet;
 	LinkedList *enemys;
 
+	ShaderID shader;
+	Model* model;
+
 public:
 
 	void addBullet();
-	GameObjectManager() {}
-	GameObjectManager(Camera* camera, Light* light);
+	GameObjectManager();
 	void render();
 	void update(int delta);
 };

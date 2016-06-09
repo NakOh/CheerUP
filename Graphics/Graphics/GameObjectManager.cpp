@@ -1,16 +1,22 @@
 #include "GameObjectManager.h"
 
 
-GameObjectManager::GameObjectManager(Camera* camera, Light* light) {
+GameObjectManager::GameObjectManager() {
 	eBullet = new LinkedList();
 	myBullet = new LinkedList();
 	enemys = new LinkedList();
 
-	this->light = light;
-	this->camera = camera;
+	shader = ShaderID();
+	model = new Model("models/flight.dat");
+
+	light = new Light();
+	camera = new Camera();
+	light->Init(8, 20, -15);
+	camera->Init();
+
 
 	Enemy* obj;
-	obj = new Enemy(this->camera, this->light);
+	obj = new Enemy(model, this->camera, this->light);
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
@@ -18,15 +24,15 @@ GameObjectManager::GameObjectManager(Camera* camera, Light* light) {
 }
 
 void GameObjectManager::addBullet() {
-	Bullet* bullet = new Bullet(camera, light);
+	Bullet* bullet = new Bullet(model, camera, light);
 	bullet->transform.SetPosition(1, 0, 3);
 	myBullet->addFront(bullet);
 }
 
 void GameObjectManager::render() {
-	if(eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->draw();
-	if (myBullet != nullptr) for (int i = 0; i < myBullet->size; i++)	myBullet->at(i)->get()->draw();
-	if (enemys != nullptr) for (int i = 0; i < enemys->size; i++)		enemys->at(i)->get()->draw();
+	if(eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->at(i)->get()), 0);
+	if (myBullet != nullptr) for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->at(i)->get()), 0);
+	if (enemys != nullptr) for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->at(i)->get()), 0);
 }
 void GameObjectManager::update(int delta) {
 	if (eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->update(delta);

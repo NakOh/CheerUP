@@ -124,8 +124,10 @@
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="ShaderID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -135,8 +137,10 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="shader.hpp" />
+    <ClInclude Include="ShaderID.h" />
     <ClInclude Include="TagHeader.h" />
   </ItemGroup>
   <ItemGroup>
