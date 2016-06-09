@@ -6,6 +6,7 @@
 using namespace std;
 
 
+
 GLuint loadBMP_custom(const char * imagepath);
 
 class Vertex {
@@ -118,7 +119,6 @@ namespace Model {
 	class Object {
 	public:
 		int vertexCount, faceCount, textureCount;
-		string tag;
 		Vertex* vertices;
 		Vec4* coorddata;
 		GLfloat* colordata;
@@ -183,26 +183,22 @@ protected:
 	void Setup_VertexNormalVector();
 	
 	//tag ¼³Á¤
-	void Setup_Tag(string tag);
+	void Setup_Tag(int tag);
 
 	float ParseStringToFloat(const char *s);
 	int ParseStringToInt(const char *s);
 
-	void init_GameObject(const char* path, Camera* camera, Light* light);
+	void init_GameObject(const char* path, Camera* camera, Light* light, int tag);
 
 public:
 	Camera* camera;
 	Light* light;
-
+	int tag;
 	Model::Arrays arrays;
 	Model::Object model;
 	Transform transform;
-<<<<<<< HEAD
 	GameObject() {}
-	GameObject(const char* path, Camera* camera, Light* light);
-=======
-	GameObject(const char* path, Camera* camera, Light* light, string tag);
->>>>>>> origin/Minsoo
+	GameObject(const char* path, Camera* camera, Light* light, int tag);
 	AxisMatrix _axisRotation;
 	void draw();
 	void setAspect(float as);

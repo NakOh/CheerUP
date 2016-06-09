@@ -208,8 +208,8 @@ void GameObject::InitColor() {
 	for (int i = 0; i < model.vertexCount * 4 * 10; i++)	model.colordata[i] = 1.0f;
 }
 
-void GameObject::Setup_Tag(string tag) {
-	model.tag = tag;
+void GameObject::Setup_Tag(int tag) {
+	this->tag = tag;
 }
 
 
@@ -265,12 +265,7 @@ void GameObject::InitVertex(FILE* f) {
 	}
 }
 
-<<<<<<< HEAD
-
-void GameObject::init_GameObject(const char* path, Camera* camera, Light* light) {
-=======
-GameObject::GameObject(const char* path, Camera* camera, Light* light, string tag) {
->>>>>>> origin/Minsoo
+void GameObject::init_GameObject(const char* path, Camera* camera, Light* light, int tag) {
 
 	transform = Transform(this);
 	this->camera = camera;
@@ -291,8 +286,8 @@ GameObject::GameObject(const char* path, Camera* camera, Light* light, string ta
 	InitData();
 }
 
-GameObject::GameObject(const char* path, Camera* camera, Light* light) {
-	init_GameObject(path, camera, light);
+GameObject::GameObject(const char* path, Camera* camera, Light* light, int tag) {
+	init_GameObject(path, camera, light, tag);
 }
 
 void Transform::SetPosition(float x, float y, float z) {

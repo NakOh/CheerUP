@@ -25,7 +25,7 @@ void dataLoad() {
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
-	//manager.Add(obj);
+	manager.Add(obj);
 }
 
 void render() {
@@ -80,9 +80,9 @@ void KeyBoard(unsigned char key, int x, int y) {
 		break;
 	case ' ':
 		//스페이스바를 누르면 총알을 만들어서 오브젝트 리스트에 추가하자.
-		GameObject* bullet = new GameObject("models/flight.dat", camera, light, "bullet");		
+		Bullet* bullet = new Bullet(camera, light);
 		bullet->transform.SetPosition(1, 0, 3);		
-		manager.Add(bullet);		
+		manager.Add(bullet);
 		break;
 	}
 	//printf("cam pos x, y, z : %.6f, %.6f, %.6f\n", Camera::pos.x, Camera::pos.y, Camera::pos.z);

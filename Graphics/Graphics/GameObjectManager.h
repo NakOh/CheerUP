@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "shader.hpp"
 #include "Enemy.h"
+#include "Bullet.h"
 #include "Matrix.h"
 #include "Light.h"
 #include <math.h>
