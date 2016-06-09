@@ -36,28 +36,22 @@ void KeyBoard(unsigned char key, int x, int y) {
 
 	switch (key) {
 	case 'w':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z );
-		//Camera::pos.z += 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z );		
 		break;
 	case 'a':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
-		//Camera::pos.x -= 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
 		break;
 	case 's':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z);
-		//Camera::pos.z -= 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z);		
 		break;
 	case 'd':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
-		//Camera::pos.x += 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
 		break;
 	case 'r':
 		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z + 0.1f);
-		//Camera::pos.y += 0.1f;
 		break;
 	case 'f':
 		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z - 0.1f);
-		//Camera::pos.y -= 0.1f;
 		break;
 
 	case 'q'://카메라의 y 축 회전

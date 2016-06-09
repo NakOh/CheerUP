@@ -35,6 +35,7 @@ private:
 	
 	void enemyDestroy();
 	void enemyCreate(int delta);
+	void enemyShoot(int delta);
 
 public:
 	Light* light;
