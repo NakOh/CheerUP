@@ -15,9 +15,6 @@
 
 class GameObjectManager {
 private:
-	Light* light;
-	Camera* camera;
-
 	LinkedList *eBullet;
 	LinkedList *myBullet;
 	LinkedList *enemys;
@@ -26,7 +23,8 @@ private:
 	Model* model;
 
 public:
-
+	Light* light;
+	Camera* camera;
 	void addBullet();
 	GameObjectManager();
 	void render();

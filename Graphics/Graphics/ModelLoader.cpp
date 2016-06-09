@@ -15,7 +15,6 @@ Model* copyModel(Model* model) {
 	ret->model.textureCount = model->model.textureCount;
 	ret->model.vertexCount = model->model.vertexCount;
 
-	//*
 	ret->model.coorddata = new Vec4[model->model.textureCount];
 	for (int i = 0; i < model->model.textureCount; i++) {
 		ret->model.coorddata[i].x = model->model.coorddata[i].x;
@@ -23,9 +22,7 @@ Model* copyModel(Model* model) {
 		ret->model.coorddata[i].z = model->model.coorddata[i].z;
 		ret->model.coorddata[i].w = model->model.coorddata[i].w;
 	}
-	//*/
 
-	//*
 	ret->model.coords = new Point4[model->model.faceCount];
 	for (int i = 0; i < model->model.faceCount; i++) {
 		ret->model.coords[i].p[0] = model->model.coords[i].p[0];
@@ -33,7 +30,6 @@ Model* copyModel(Model* model) {
 		ret->model.coords[i].p[2] = model->model.coords[i].p[2];
 		ret->model.coords[i].p[3] = model->model.coords[i].p[3];
 	}
-	//*/
 
 	ret->model.vertices = new Vertex[model->model.vertexCount];
 	for (int i = 0; i < model->model.vertexCount; i++) {
@@ -92,7 +88,6 @@ void Model::makeModel(const char* path) {
 
 	InitColor();
 	InitCenter();
-	//InitGPUId();
 
 	InitData();
 }

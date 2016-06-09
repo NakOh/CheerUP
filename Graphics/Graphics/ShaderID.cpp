@@ -2,7 +2,7 @@
 
 #include "ShaderID.h"
 #include "Object.h"
-#include "ModelLoader.h"
+#include "GameObjectManager.h"
 
 GLuint loadBMP_custom(const char * imagepath) {
 	unsigned char header[54];
@@ -130,13 +130,13 @@ void ShaderID::render(GameObject& obj, int textureNumber) {
 	glUniformMatrix4fv(zAxisRotationMatrixID, 1, GL_FALSE, &obj._axisRotation._Z_axis_RotationMatrix[0]);
 	glUniformMatrix4fv(scaleMatrixID, 1, GL_FALSE, &scalelationMatrix[0]);
 
-	glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->X_axis_RotationMatrix[0]);
-	glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->Y_axis_RotationMatrix[0]);
-	glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &obj.camera->Z_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camXAxisRotationMatrixID, 1, GL_FALSE, &obj.manager->camera->X_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camYAxisRotationMatrixID, 1, GL_FALSE, &obj.manager->camera->Y_axis_RotationMatrix[0]);
+	glUniformMatrix4fv(camZAxisRotationMatrixID, 1, GL_FALSE, &obj.manager->camera->Z_axis_RotationMatrix[0]);
 
 	glUniform4f(centerPositionID, obj.transform.position.x, obj.transform.position.y, obj.transform.position.z, 1);
-	glUniform4f(lightPositionID, obj.light->pos.x, obj.light->pos.y, obj.light->pos.z, 1);
-	glUniform4f(cameraPositionID, obj.camera->pos.x, obj.camera->pos.y, obj.camera->pos.z, 1);
+	glUniform4f(lightPositionID, obj.manager->light->pos.x, obj.manager->light->pos.y, obj.manager->light->pos.z, 1);
+	glUniform4f(cameraPositionID, obj.manager->camera->pos.x, obj.manager->camera->pos.y, obj.manager->camera->pos.z, 1);
 
 	glEnableVertexAttribArray(vertexPositionID);
 	glEnableVertexAttribArray(vertexColorID);

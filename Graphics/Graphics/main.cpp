@@ -8,7 +8,6 @@ Time time;
 void render();
 void idle();
 void changeSize(int width, int height);
-//void dataLoad();
 void myGLInit();
 void update();
 void draw();
@@ -84,7 +83,6 @@ void main(int argc, char* argv[]){
 	glutCreateWindow("Grapics");
 	
 	myGLInit();
-	//dataLoad();
 
 	glutDisplayFunc(render);
 	glutIdleFunc(idle);

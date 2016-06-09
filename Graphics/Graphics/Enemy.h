@@ -7,7 +7,7 @@
 class Enemy : public GameObject {
 public:
 	virtual void update(int delta);
-	Enemy(Model* model, Camera* camera, Light* light);
+	Enemy(Model* model, GameObjectManager* manager);
 };
 
 class EnemyManager {

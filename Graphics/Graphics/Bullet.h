@@ -10,7 +10,7 @@ private:
 	int myTime;
 public:
 	virtual void update(int delta);
-	Bullet(Model* model, Camera* camera, Light* light);
+	Bullet(Model* model, GameObjectManager* manager);
 };
 
 

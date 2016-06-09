@@ -8,6 +8,6 @@ void Bullet::update(int delta) {
 }
 
 
-Bullet::Bullet(Model* model, Camera* camera, Light* light) {
-	init_GameObject(model, camera, light, 0);
+Bullet::Bullet(Model* model, GameObjectManager* manager) {
+	init_GameObject(model, manager, 0);
 }

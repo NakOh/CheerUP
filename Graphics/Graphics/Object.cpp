@@ -10,6 +10,8 @@
 #include <math.h>
 
 
+#include "GameObjectManager.h"
+
 using namespace std;
 
 
@@ -30,19 +32,18 @@ void GameObject::Setup_Tag(int tag) {
 	this->tag = tag;
 }
 
-void GameObject::init_GameObject(Model* model, Camera* camera, Light* light, int tag) {
+void GameObject::init_GameObject(Model* model, GameObjectManager* manager, int tag) {
 
 	transform = Transform(this);
-	this->camera = camera;
-	this->light = light;
+	this->manager = manager;
 
 	this->body = copyModel(model);
 
 	Setup_Tag(tag);
 }
 
-GameObject::GameObject(Model* model, Camera* camera, Light* light, int tag) {
-	init_GameObject(model, camera, light, tag);
+GameObject::GameObject(Model* model, GameObjectManager* manager, int tag) {
+	init_GameObject(model, manager, tag);
 }
 
 void Transform::SetPosition(float x, float y, float z) {
@@ -119,10 +120,5 @@ void Transform::Rotation(float x, float y, float z) {
 	gameObject->_axisRotation._Z_axis_RotationMatrix[4] = -sin(rotation.z);
 	gameObject->_axisRotation._Z_axis_RotationMatrix[5] = cos(rotation.z);
 
-}
-
-
-void GameObject::draw() {
-	//shaderID.Render(*this, 1);
 }
 

@@ -10,6 +10,7 @@
 using namespace std;
 
 class GameObject;
+class GameObjectManager;
 
 class Transform {
 private:
@@ -54,18 +55,17 @@ class GameObject {
 protected:
 	//tag ¼³Á¤
 	void Setup_Tag(int tag);
-	void init_GameObject(Model* model, Camera* camera, Light* light, int tag);
+	void init_GameObject(Model* model, GameObjectManager* manager, int tag);
 
 public:
-	Camera* camera;
-	Light* light;
+	GameObjectManager* manager;
 	int tag;
 
 	Model* body;
 
 	Transform transform;
 	GameObject() {}
-	GameObject(Model* model, Camera* camera, Light* light, int tag);
+	GameObject(Model* model, GameObjectManager* manager, int tag);
 	AxisMatrix _axisRotation;
 	void draw();
 	virtual void update(int delta) = 0;

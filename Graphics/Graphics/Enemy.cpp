@@ -6,6 +6,6 @@ void Enemy::update(int delta) {
 }
 
 
-Enemy::Enemy(Model* model, Camera* camera, Light* light) {
-	init_GameObject(model, camera, light, TAG_ENEMY);
+Enemy::Enemy(Model* model, GameObjectManager* manager) {
+	init_GameObject(model, manager, TAG_ENEMY);
 }

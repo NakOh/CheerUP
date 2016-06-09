@@ -14,9 +14,8 @@ GameObjectManager::GameObjectManager() {
 	light->Init(8, 20, -15);
 	camera->Init();
 
-
 	Enemy* obj;
-	obj = new Enemy(model, this->camera, this->light);
+	obj = new Enemy(model, this);
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
@@ -24,7 +23,7 @@ GameObjectManager::GameObjectManager() {
 }
 
 void GameObjectManager::addBullet() {
-	Bullet* bullet = new Bullet(model, camera, light);
+	Bullet* bullet = new Bullet(model, this);
 	bullet->transform.SetPosition(1, 0, 3);
 	myBullet->addFront(bullet);
 }
