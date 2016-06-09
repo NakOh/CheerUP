@@ -63,10 +63,12 @@ public:
 	Model* body;
 
 	Transform transform;
-	GameObject() {}
-	GameObject(Model* model, GameObjectManager* manager, int tag);
 	AxisMatrix _axisRotation;
-	void draw();
+
+	GameObject() {}
+	~GameObject();
+	GameObject(Model* model, GameObjectManager* manager, int tag);
+
 	virtual void update(int delta) = 0;
 };
 

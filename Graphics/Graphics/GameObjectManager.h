@@ -30,7 +30,8 @@ private:
 	Model* model;
 	
 	EnemyVar enemyVar;
-
+	
+	void enemyDestroy();
 
 public:
 	Light* light;

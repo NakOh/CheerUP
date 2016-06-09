@@ -5,6 +5,19 @@
 
 
 
+void Node::removeBack() {
+	if (next != nullptr) {
+		Node* remove = next;
+		if (next->next != nullptr) {
+			next = next->next;
+			next->prev = this;
+		} else {
+			next = nullptr;
+		}
+		free(remove);
+	}
+}
+
 bool Node::hasData() {
 	return isData;
 }
@@ -41,11 +54,12 @@ Node::Node(GameObject* go) {
 
 
 void Node::deleteData() {
-	if (isData)	delete data;
+	if (isData)		free(data);
 }
 
 
 
+/*
 void Node::remove() {
 	Node* prevN = nullptr;
 	Node* nextN = nullptr;
@@ -63,11 +77,10 @@ void Node::remove() {
 	}
 	deleteData();
 }
-
-
+*/
 
 Node::~Node() {
-	remove();
+	deleteData();
 }
 
 
@@ -98,9 +111,7 @@ LinkedList::~LinkedList() {
 
 void LinkedList::addFront(GameObject* obj) {
 	Node* newNode = new Node(obj);
-	if(this->head != nullptr)
-		newNode->next = this->head;
-	else	newNode->prev = nullptr;
+	if(this->head != nullptr)	newNode->next = head;
 	this->head = newNode;
 	size++;
 }
@@ -109,15 +120,12 @@ void LinkedList::addFront(GameObject* obj) {
 
 void LinkedList::addBack(GameObject* obj) {
 	if (head != nullptr) {
-		Node* target = head;
-		while (target->next != nullptr)
-			target = target->next;
+		Node* target = at(size-1);
 		Node* newNode = new Node(obj);
 		target->next = newNode;
 		newNode->prev = target;
 		size++;
-	}
-	else {
+	} else {
 		addFront(obj);
 	}
 }
@@ -131,21 +139,25 @@ Node* LinkedList::at(int num) {
 	return target;
 }
 
+GameObject* LinkedList::get(int num) {
+	return at(num)->get();
+}
+
 
 void LinkedList::remove(int at) {
 	if (at >= size || at < 0)	return;
 
-	Node* target = head;
-
-	for (int i = 0; i < at; i++)
-		target = target->next;
-
-	if (target->next != nullptr) {
-		target->prev->next = target->next;
-		target->next->prev = target->prev;
+	if (at == 0) {
+		if (head->next != nullptr) {
+			head = head->next;
+			head->prev = nullptr;
+			size--;
+		}
+	} else {
+		Node* target = head;
+		for (int i = 0; i < at - 1; i++)
+			target = target->next;
+		target->removeBack();
+		size--;
 	}
-	if (target->hasData())
-		target->deleteData();
-	delete target;
-	size--;
 }

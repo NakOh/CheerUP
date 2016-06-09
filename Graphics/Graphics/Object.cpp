@@ -46,6 +46,10 @@ GameObject::GameObject(Model* model, GameObjectManager* manager, int tag) {
 	init_GameObject(model, manager, tag);
 }
 
+GameObject::~GameObject() {
+	delete body;
+}
+
 void Transform::SetPosition(float x, float y, float z) {
 	float dx, dy, dz;
 	dx = x - position.x;

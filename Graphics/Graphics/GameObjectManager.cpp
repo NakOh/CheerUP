@@ -17,31 +17,35 @@ GameObjectManager::GameObjectManager() {
 	camera->Init();
 }
 
+void GameObjectManager::enemyDestroy() {
+
+	bool reFind = true;
+
+	while (reFind) {
+		reFind = false;
+		Node* head = enemys->head;
+		for (int i = 0; i < enemys->size; i++) {
+			if (((Enemy*)head->get())->isDead) {
+				enemys->remove(i);
+				reFind = true;
+				break;
+			} else {
+				head = head->next;
+			}
+		}
+	}
+}
+
 void GameObjectManager::enemyUpdate(int delta) {
 	enemyVar.createTimer += delta;
 	if (enemyVar.createTimer > enemyVar.createMaxTimer) {
 		Enemy* obj;
 		obj = new Enemy(model, this);
-		enemys->addFront(obj);
+		enemys->addBack(obj);
 
 		enemyVar.createTimer -= enemyVar.createMaxTimer;
 	}
-
-	bool reFind = false;
-
-	Node* head = enemys->head;
-	for (int i = 0; i < enemys->size; i++) {
-		if (((Enemy*)head->get())->isDead) {
-			Node* rem = head;
-			//rem->remove();
-			//rem->deleteData();
-			//delete rem;
-		}
-		else {
-			head = head->next;
-		}
-
-	}
+	enemyDestroy();
 }
 
 void GameObjectManager::addBullet() {
@@ -51,14 +55,14 @@ void GameObjectManager::addBullet() {
 }
 
 void GameObjectManager::render() {
-	if(eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->at(i)->get()), TEXTURE_CODE_PLAYER);
-	if (myBullet != nullptr) for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->at(i)->get()), TEXTURE_CODE_BULLET);
-	if (enemys != nullptr) for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->at(i)->get()), TEXTURE_CODE_ENEMY);
+	if(eBullet != nullptr)		for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->at(i)->get()), TEXTURE_CODE_PLAYER);
+	if (myBullet != nullptr)	for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->at(i)->get()), TEXTURE_CODE_BULLET);
+	if (enemys != nullptr)		for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->at(i)->get()), TEXTURE_CODE_ENEMY);
 }
 
 void GameObjectManager::update(int delta) {
 	if (eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->update(delta);
 	if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
-	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)		enemys->at(i)->get()->update(delta);
+	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)			enemys->at(i)->get()->update(delta);
 	enemyUpdate(delta);
 }

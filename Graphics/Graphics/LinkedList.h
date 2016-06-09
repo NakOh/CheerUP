@@ -12,7 +12,9 @@ public:
 	Node* prev;
 	Node* next;
 
-	void remove();
+	//void remove();
+
+	void removeBack();
 
 	bool hasData();
 	void set(GameObject* go);
@@ -36,6 +38,7 @@ public:
 	void addFront(GameObject* obj);
 	void addBack(GameObject* obj);
 	Node* at(int num);
+	GameObject* get(int num);
 
 	//0 부터 시작.
 	void remove(int at);

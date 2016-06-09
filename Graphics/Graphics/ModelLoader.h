@@ -23,6 +23,15 @@ namespace NameModels {
 		GLfloat* colordata;
 		Point4* faces;
 		Point4* coords;
+
+		Object() {}
+		~Object() {
+			delete vertices;
+			delete coorddata;
+			delete colordata;
+			delete faces;
+			delete coords;
+		}
 	};
 
 	class Arrays {
@@ -31,6 +40,14 @@ namespace NameModels {
 		Vec4* faceNormalVector;
 		GLfloat* vertexNormalArray;
 		GLfloat* vertexCoordArray;
+
+		Arrays() {}
+		~Arrays() {
+			delete vertexPositionArray;
+			delete faceNormalVector;
+			delete vertexNormalArray;
+			delete vertexCoordArray;
+		}
 	};
 };
 
