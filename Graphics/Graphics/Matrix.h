@@ -18,6 +18,7 @@ public:
 	void Mul(float d);
 	void Divide(float d);
 
+	bool isColl(Vec4& other, float dist);
 	//*
 	Vec4& operator=(Vec4& a);
 	Vec4 operator+(Vec4& a);

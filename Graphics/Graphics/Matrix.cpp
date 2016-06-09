@@ -99,6 +99,13 @@ Vec4 operator*(float a, Vec4 ref) {
 }
 //*/
 
+bool Vec4::isColl(Vec4& other, float dist) {
+	float dx = other.x - x;
+	float dy = other.y - y;
+	float dz = other.z - z;
+	return dx * dx + dy * dy + dz * dz <= dist * dist;
+}
+
 Point4::Point4() {
 	for (int i = 0; i < 4; i++)	p[i] = 0;
 }

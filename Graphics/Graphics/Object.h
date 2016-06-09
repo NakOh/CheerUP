@@ -65,6 +65,10 @@ public:
 	Transform transform;
 	AxisMatrix _axisRotation;
 
+	bool isColl(GameObject* other, float dist) {
+		transform.position.isColl(other->transform.position, dist);
+	}
+
 	GameObject() {}
 	~GameObject();
 	GameObject(Model* model, GameObjectManager* manager, int tag);

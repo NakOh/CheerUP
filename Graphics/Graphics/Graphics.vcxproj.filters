@@ -43,6 +43,9 @@
     <ClCompile Include="ShaderID.cpp">
       <Filter>Body</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -85,6 +88,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="TagHeader.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBullet.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

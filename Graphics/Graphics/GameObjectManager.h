@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "MyCharacter.h"
 #include "Bullet.h"
+#include "EnemyBullet.h"
 #include "Map.h"
 #include "Matrix.h"
 #include "Light.h"
@@ -25,10 +26,6 @@ public:
 
 class GameObjectManager {
 private:
-	LinkedList *eBullet;
-	LinkedList *myBullet;
-	LinkedList *enemys;
-
 	Map* map2;
 	Map* map;
 
@@ -39,11 +36,18 @@ private:
 	
 	EnemyVar enemyVar;
 	
+	void eBulletDestroy();
+	void myBulletDestroy();
+
 	void enemyDestroy();
 	void enemyCreate(int delta);
 	void enemyShoot(int delta);
 
 public:
+	LinkedList *eBullet;
+	LinkedList *myBullet;
+	LinkedList *enemys;
+
 	Light* light;
 	Camera* camera;
 	MyCharacter* myChar;

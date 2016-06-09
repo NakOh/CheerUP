@@ -1,7 +1,7 @@
 #include "LinkedList.h"
 
 #include <iostream>
-
+#include "Object.h"
 
 
 
@@ -14,7 +14,7 @@ void Node::removeBack() {
 		} else {
 			next = nullptr;
 		}
-		free(remove);
+		delete remove;
 	}
 }
 
@@ -54,7 +54,9 @@ Node::Node(GameObject* go) {
 
 
 void Node::deleteData() {
-	if (isData)		free(data);
+	if (isData) {
+		delete data;
+	}
 }
 
 

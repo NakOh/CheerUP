@@ -9,6 +9,7 @@ class Bullet : public GameObject {
 private:
 	int myTime;
 public:
+	bool isDead = false;
 	virtual void update(int delta);
 	Bullet(Model* model, GameObjectManager* manager);
 };

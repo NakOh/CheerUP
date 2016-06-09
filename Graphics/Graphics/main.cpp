@@ -36,26 +36,30 @@ void KeyBoard(unsigned char key, int x, int y) {
 
 	switch (key) {
 	case 'w':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z );		
+		if(manager->myChar != nullptr)manager->myChar->input.up = true;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z + 0.1f * 0.3f);
 		break;
 	case 'a':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
+		if (manager->myChar != nullptr)manager->myChar->input.left = true;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
 		break;
 	case 's':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z);		
+		if (manager->myChar != nullptr)manager->myChar->input.down = true;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z - 0.1f * 0.3f);
 		break;
 	case 'd':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
+		if (manager->myChar != nullptr)manager->myChar->input.right = true;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
 		break;
 	case 'r':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z + 0.1f);
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z + 0.1f);
 		break;
 	case 'f':
-		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z - 0.1f);
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z - 0.1f);
 		break;
 
 	case 'q'://카메라의 y 축 회전
-		//Camera::Rotation(0, 0.1f, 0);
+			 //Camera::Rotation(0, 0.1f, 0);
 		break;
 
 	case 'e':
@@ -67,6 +71,27 @@ void KeyBoard(unsigned char key, int x, int y) {
 		break;
 	}
 	//printf("cam pos x, y, z : %.6f, %.6f, %.6f\n", Camera::pos.x, Camera::pos.y, Camera::pos.z);
+}
+
+void KeyBoardUp(unsigned char key, int x, int y) {
+	switch (key) {
+	case 'w':
+		if (manager->myChar != nullptr)manager->myChar->input.up = false;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z + 0.1f * 0.3f);
+		break;
+	case 'a':
+		if (manager->myChar != nullptr)manager->myChar->input.left = false;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
+		break;
+	case 's':
+		if (manager->myChar != nullptr)manager->myChar->input.down = false;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z - 0.1f * 0.3f);
+		break;
+	case 'd':
+		if (manager->myChar != nullptr)manager->myChar->input.right = false;
+		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
+		break;
+	}
 }
 
 void main(int argc, char* argv[]){
@@ -99,7 +124,7 @@ void myGLInit() {
 	int glewtest = glewInit();
 	if (glewtest != GLEW_OK)		printf("asdf");
 	glutKeyboardFunc(KeyBoard);
-
+	glutKeyboardUpFunc(KeyBoardUp);
 	manager = new GameObjectManager();
 
 	glEnable(GL_TEXTURE_2D);

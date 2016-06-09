@@ -26,11 +26,13 @@ namespace NameModels {
 
 		Object() {}
 		~Object() {
-			delete vertices;
-			delete coorddata;
-			delete colordata;
-			delete faces;
-			delete coords;
+			//*
+			delete[] (vertices);
+			delete[] (coorddata);
+			delete[] (colordata);
+			delete[] (faces);
+			delete[] (coords);
+			//*/
 		}
 	};
 
@@ -44,10 +46,10 @@ namespace NameModels {
 
 		Arrays() {}
 		~Arrays() {
-			delete vertexPositionArray;
-			delete faceNormalVector;
-			delete vertexNormalArray;
-			delete vertexCoordArray;
+			delete[] vertexPositionArray;
+			delete[] (faceNormalVector);
+			delete[] (vertexNormalArray);
+			delete[] (vertexCoordArray);
 		}
 	};
 };
@@ -106,6 +108,7 @@ public:
 	Model(const char* path) {
 		makeModel(path);
 	}
+
 };
 
 Model* copyModel(Model* model);
