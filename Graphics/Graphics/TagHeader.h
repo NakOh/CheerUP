@@ -18,5 +18,9 @@
 #define TEXTURE_CODE_COLOR_BLUE 6
 #define TEXTURE_CODE_BULLET 1
 
+#define TYPE_ATTACK 0
+#define TYPE_DEFENSE 1
+#define TYPE_MIX 2
+
 
 #endif // !__TAG_HEADER_H__
