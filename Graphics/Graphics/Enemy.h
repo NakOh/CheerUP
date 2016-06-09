@@ -10,5 +10,9 @@ public:
 	Enemy(Camera* camera, Light* light);
 };
 
+class EnemyManager {
+	
+};
+
 
 #endif // ! __ENEMY_H__

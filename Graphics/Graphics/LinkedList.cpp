@@ -98,7 +98,8 @@ LinkedList::~LinkedList() {
 
 void LinkedList::addFront(GameObject* obj) {
 	Node* newNode = new Node(obj);
-	if(this->head != nullptr)	newNode->next = this->head;
+	if(this->head != nullptr)
+		newNode->next = this->head;
 	else	newNode->prev = nullptr;
 	this->head = newNode;
 	size++;

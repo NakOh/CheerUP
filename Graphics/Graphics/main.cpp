@@ -3,8 +3,7 @@
 
 #include "GameObjectManager.h"
 
-Enemy* obj;
-Manager manager;
+GameObjectManager manager;
 
 Light* light;
 Camera* camera;
@@ -13,20 +12,14 @@ Time time;
 void render();
 void idle();
 void changeSize(int width, int height);
-void dataLoad();
+//void dataLoad();
 void myGLInit();
 void update();
 void draw();
 
 void checkError();
 
-void dataLoad() {
-	obj = new Enemy(camera, light);
-	obj->transform.SetPosition(0, 0, 3);
-	obj->transform.Scalelation(2, 2, 2);
-	obj->transform.Rotation(100, 0, 0);
-	manager.Add(obj);
-}
+
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -36,38 +29,38 @@ void render() {
 }
 
 void update() {
-	obj->transform.Rotation(0, -0.001 * time.deltaTime, 0);
+	manager.update(time.deltaTime);
 }
 
 void draw() {	
-	manager.Render();
+	manager.render();
 }
 
 void KeyBoard(unsigned char key, int x, int y) {
 
 	switch (key) {
 	case 'w':
-		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y + 0.1f, obj->transform.position.z );
+		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y + 0.1f, obj->transform.position.z );
 		//Camera::pos.z += 0.1f;
 		break;
 	case 'a':
-		obj->transform.SetPosition(obj->transform.position.x - 0.1f, obj->transform.position.y, obj->transform.position.z);
+		//obj->transform.SetPosition(obj->transform.position.x - 0.1f, obj->transform.position.y, obj->transform.position.z);
 		//Camera::pos.x -= 0.1f;
 		break;
 	case 's':
-		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y - 0.1f, obj->transform.position.z);
+		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y - 0.1f, obj->transform.position.z);
 		//Camera::pos.z -= 0.1f;
 		break;
 	case 'd':
-		obj->transform.SetPosition(obj->transform.position.x + 0.1f, obj->transform.position.y, obj->transform.position.z);
+		//obj->transform.SetPosition(obj->transform.position.x + 0.1f, obj->transform.position.y, obj->transform.position.z);
 		//Camera::pos.x += 0.1f;
 		break;
 	case 'r':
-		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z + 0.1f);
+		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z + 0.1f);
 		//Camera::pos.y += 0.1f;
 		break;
 	case 'f':
-		obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z - 0.1f);
+		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z - 0.1f);
 		//Camera::pos.y -= 0.1f;
 		break;
 
@@ -80,9 +73,7 @@ void KeyBoard(unsigned char key, int x, int y) {
 		break;
 	case ' ':
 		//스페이스바를 누르면 총알을 만들어서 오브젝트 리스트에 추가하자.
-		Bullet* bullet = new Bullet(camera, light);
-		bullet->transform.SetPosition(1, 0, 3);		
-		manager.Add(bullet);
+		manager.addBullet();
 		break;
 	}
 	//printf("cam pos x, y, z : %.6f, %.6f, %.6f\n", Camera::pos.x, Camera::pos.y, Camera::pos.z);
@@ -96,7 +87,7 @@ void main(int argc, char* argv[]){
 	glutCreateWindow("Grapics");
 	
 	myGLInit();
-	dataLoad();
+	//dataLoad();
 
 	glutDisplayFunc(render);
 	glutIdleFunc(idle);
@@ -115,21 +106,21 @@ void myGLInit() {
 	light = new Light();
 	camera = new Camera();
 	time = Time();
-	
+
 	light->Init(8, 20, -15);
 	camera->Init();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
+	
 	int glewtest = glewInit();
-	if (glewtest != GLEW_OK) {
-		printf("asdf");
-	}
+	if (glewtest != GLEW_OK)		printf("asdf");
 	glutKeyboardFunc(KeyBoard);
+
+	manager = GameObjectManager(camera, light);
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);  
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CW);
@@ -143,5 +134,5 @@ void idle() {
 void changeSize(int width, int height) {
 	GLfloat aspectRatio = (GLfloat)height / (GLfloat)width;
 	glViewport(0, 0, width, height);
-	obj->setAspect(aspectRatio);
+	//obj->setAspect(aspectRatio);
 }

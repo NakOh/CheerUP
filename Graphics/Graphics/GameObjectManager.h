@@ -13,16 +13,22 @@
 #include "vector" 
 #include "LinkedList.h"
 
-class Manager {
+class GameObjectManager {
 private:
-	LinkedList *list;
-public:
-	Manager();
-	void Add(GameObject* obj);
-	void Render();
-	void Update();
-	int getObjectSize();
+	Light* light;
+	Camera* camera;
 
+	LinkedList *eBullet;
+	LinkedList *myBullet;
+	LinkedList *enemys;
+
+public:
+
+	void addBullet();
+	GameObjectManager() {}
+	GameObjectManager(Camera* camera, Light* light);
+	void render();
+	void update(int delta);
 };
 
 #endif // !_GAMEOBJECTMANAGER_H_

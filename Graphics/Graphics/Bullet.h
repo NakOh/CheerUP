@@ -4,6 +4,7 @@
 
 #include "Object.h"
 
+
 class Bullet : public GameObject {
 public:
 	virtual void update(float delta);
