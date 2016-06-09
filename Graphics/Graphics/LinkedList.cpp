@@ -105,14 +105,20 @@ void LinkedList::addFront(GameObject* obj) {
 }
 
 
+
 void LinkedList::addBack(GameObject* obj) {
-	Node* target = head;
-	while (target->next != nullptr)
-		target = target->next;
-	Node* newNode = new Node(obj);
-	target->next = newNode;
-	newNode->prev = target;
-	size++;
+	if (head != nullptr) {
+		Node* target = head;
+		while (target->next != nullptr)
+			target = target->next;
+		Node* newNode = new Node(obj);
+		target->next = newNode;
+		newNode->prev = target;
+		size++;
+	}
+	else {
+		addFront(obj);
+	}
 }
 
 

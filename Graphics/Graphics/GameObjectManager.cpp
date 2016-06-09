@@ -10,13 +10,13 @@ void Manager::Add(GameObject* obj) {
 	//list->insertNodeAfter(pool->head, obj);
 }
 void Manager::Render() {
-	//for (int i = 0; i < list->size; i++) {
-	//printf("%s", list->at(0)->hasData());
-		//camera 랑 light값이 필요함 (현재 Main에 존재, 가져와야댐)
-	//}
+	for (int i = 0; i < list->size; i++) {
+		list->at(i)->get()->draw();
+	}
 }
 void Manager::Update() {
-	//list->addFront(new GameObject("models/flight.dat", new Camera(), new Light()));
+	for (int i = 0; i < list->size; i++) {
+	}
 }
 
 int Manager::getObjectSize() {
