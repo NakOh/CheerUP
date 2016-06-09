@@ -15,6 +15,10 @@ GameObjectManager::GameObjectManager() {
 	camera = new Camera();
 	light->Init(8, 20, -15);
 	camera->Init();
+
+	myChar = new MyCharacter(model, this);
+	myChar->transform.SetPosition(0, -1.5, 3);
+	myChar->transform.Rotation(0, 0, 90.f);
 }
 
 void GameObjectManager::enemyCreate(int delta) {
@@ -51,7 +55,8 @@ void GameObjectManager::enemyUpdate(int delta) {
 
 void GameObjectManager::addBullet() {
 	Bullet* bullet = new Bullet(model, this);
-	bullet->transform.SetPosition(1, 0, 3);
+	Vec4 pos = myChar->transform.position;
+	bullet->transform.SetPosition(pos.x, pos.y, pos.z);
 	myBullet->addFront(bullet);
 }
 
@@ -59,6 +64,7 @@ void GameObjectManager::render() {
 	if(eBullet != nullptr)		for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->get(i)), TEXTURE_CODE_PLAYER);
 	if (myBullet != nullptr)	for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->get(i)), TEXTURE_CODE_BULLET);
 	if (enemys != nullptr)		for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->get(i)), TEXTURE_CODE_ENEMY);
+	shader.render((*myChar), TEXTURE_CODE_PLAYER);
 }
 
 void GameObjectManager::update(int delta) {
@@ -66,4 +72,5 @@ void GameObjectManager::update(int delta) {
 	if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
 	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)			enemys->at(i)->get()->update(delta);
 	enemyUpdate(delta);
+	myChar->update(delta);
 }

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "shader.hpp"
 #include "Enemy.h"
+#include "MyCharacter.h"
 #include "Bullet.h"
 #include "Matrix.h"
 #include "Light.h"
@@ -38,6 +39,9 @@ private:
 public:
 	Light* light;
 	Camera* camera;
+	MyCharacter* myChar;
+	
+
 	void addBullet();
 	GameObjectManager();
 	void render();
