@@ -6,6 +6,8 @@
 
 
 class Bullet : public GameObject {
+private:
+	int myTime;
 public:
 	virtual void update(float delta);
 	Bullet(Camera* camera, Light* light);
