@@ -1,7 +1,7 @@
 
 #include "Enemy.h"
 
-void Enemy::update(float delta) {
+void Enemy::update(int delta) {
 
 }
 

@@ -32,5 +32,4 @@ void GameObjectManager::update(int delta) {
 	if (eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->update(delta);
 	if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
 	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)		enemys->at(i)->get()->update(delta);
-
 }

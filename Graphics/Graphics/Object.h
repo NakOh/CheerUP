@@ -203,5 +203,5 @@ public:
 	AxisMatrix _axisRotation;
 	void draw();
 	void setAspect(float as);
-	virtual void update(float delta) = 0;
+	virtual void update(int delta) = 0;
 };

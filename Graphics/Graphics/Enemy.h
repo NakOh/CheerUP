@@ -6,7 +6,7 @@
 
 class Enemy : public GameObject {
 public:
-	virtual void update(float delta);
+	virtual void update(int delta);
 	Enemy(Camera* camera, Light* light);
 };
 

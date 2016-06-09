@@ -9,7 +9,7 @@ class Bullet : public GameObject {
 private:
 	int myTime;
 public:
-	virtual void update(float delta);
+	virtual void update(int delta);
 	Bullet(Camera* camera, Light* light);
 };
 
