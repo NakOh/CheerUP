@@ -3,6 +3,8 @@
 #include "Light.h"
 #include <fstream>
 
+using namespace std;
+
 
 GLuint loadBMP_custom(const char * imagepath);
 
@@ -116,6 +118,7 @@ namespace Model {
 	class Object {
 	public:
 		int vertexCount, faceCount, textureCount;
+		string tag;
 		Vertex* vertices;
 		Vec4* coorddata;
 		GLfloat* colordata;
@@ -178,6 +181,9 @@ protected:
 
 	//점의 노말벡터 셋업
 	void Setup_VertexNormalVector();
+	
+	//tag 설정
+	void Setup_Tag(string tag);
 
 	float ParseStringToFloat(const char *s);
 	int ParseStringToInt(const char *s);
@@ -191,8 +197,12 @@ public:
 	Model::Arrays arrays;
 	Model::Object model;
 	Transform transform;
+<<<<<<< HEAD
 	GameObject() {}
 	GameObject(const char* path, Camera* camera, Light* light);
+=======
+	GameObject(const char* path, Camera* camera, Light* light, string tag);
+>>>>>>> origin/Minsoo
 	AxisMatrix _axisRotation;
 	void draw();
 	void setAspect(float as);
