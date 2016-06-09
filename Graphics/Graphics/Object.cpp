@@ -262,7 +262,8 @@ void GameObject::InitVertex(FILE* f) {
 	}
 }
 
-GameObject::GameObject(const char* path, Camera* camera, Light* light) {
+
+void GameObject::init_GameObject(const char* path, Camera* camera, Light* light) {
 
 	transform = Transform(this);
 	this->camera = camera;
@@ -280,6 +281,10 @@ GameObject::GameObject(const char* path, Camera* camera, Light* light) {
 	InitGPUId();
 
 	InitData();
+}
+
+GameObject::GameObject(const char* path, Camera* camera, Light* light) {
+	init_GameObject(path, camera, light);
 }
 
 void Transform::SetPosition(float x, float y, float z) {

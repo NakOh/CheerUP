@@ -140,7 +140,7 @@ public:
 };
 
 class GameObject {
-private:
+protected:
 	ShaderID shaderID;
 
 	//모든 데이터를 처음에 초기화
@@ -182,6 +182,8 @@ private:
 	float ParseStringToFloat(const char *s);
 	int ParseStringToInt(const char *s);
 
+	void init_GameObject(const char* path, Camera* camera, Light* light);
+
 public:
 	Camera* camera;
 	Light* light;
@@ -189,8 +191,10 @@ public:
 	Model::Arrays arrays;
 	Model::Object model;
 	Transform transform;
+	GameObject() {}
 	GameObject(const char* path, Camera* camera, Light* light);
 	AxisMatrix _axisRotation;
 	void draw();
 	void setAspect(float as);
+	virtual void update(float delta) = 0;
 };

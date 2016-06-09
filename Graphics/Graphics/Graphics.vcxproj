@@ -117,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LinkedList.cpp" />
@@ -127,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LinkedList.h" />

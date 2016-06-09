@@ -3,7 +3,7 @@
 
 #include "GameObjectManager.h"
 
-GameObject* obj;
+Enemy* obj;
 Manager manager;
 
 Light* light;
@@ -21,11 +21,11 @@ void draw();
 void checkError();
 
 void dataLoad() {
-	obj = new GameObject("models/flight.dat", camera, light);
+	obj = new Enemy(camera, light);
 	obj->transform.SetPosition(0, 0, 3);
 	obj->transform.Scalelation(2, 2, 2);
 	obj->transform.Rotation(100, 0, 0);
-	manager.Add(obj);
+	//manager.Add(obj);
 }
 
 void render() {
@@ -40,7 +40,7 @@ void update() {
 }
 
 void draw() {
-	//obj->draw();
+	obj->draw();
 	manager.Render();
 }
 
@@ -81,8 +81,8 @@ void KeyBoard(unsigned char key, int x, int y) {
 		break;
 	case ' ':
 		//스페이스바를 누르면 총알을 만들어서 오브젝트 리스트에 추가하자.
-		GameObject* bullet = new GameObject("models/flight.dat", camera, light);		
-		bullet->transform.SetPosition(1, 0, 3);		
+		//GameObject* bullet = new GameObject("models/flight.dat", camera, light);		
+		//bullet->transform.SetPosition(1, 0, 3);		
 		//objectManager.Add(bullet);
 		
 		break;

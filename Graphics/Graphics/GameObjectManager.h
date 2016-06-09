@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include "shader.hpp"
-#include "Object.h"
+#include "Enemy.h"
 #include "Matrix.h"
 #include "Light.h"
 #include <math.h>
