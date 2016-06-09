@@ -7,7 +7,8 @@
 class Enemy : public GameObject {
 private:
 	int timer = 0;
-
+	int type;
+	int speed;
 public:
 	virtual void update(int delta);
 	Enemy(Model* model, GameObjectManager* manager);
