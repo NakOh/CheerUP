@@ -17,6 +17,7 @@ class EnemyVar {
 public:
 	int createTimer = 0;
 	int createMaxTimer = 1000;
+	float createRange_X = 8;
 	EnemyVar() {}
 };
 
@@ -32,6 +33,7 @@ private:
 	EnemyVar enemyVar;
 	
 	void enemyDestroy();
+	void enemyCreate(int delta);
 
 public:
 	Light* light;
