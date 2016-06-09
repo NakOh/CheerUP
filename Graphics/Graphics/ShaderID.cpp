@@ -41,7 +41,7 @@ GLuint loadBMP_custom(const char * imagepath) {
 }
 
 void ShaderID::InitBitmap() {
-	int textureNumber = 2;
+	int textureNumber = 3;
 	texID = (GLuint*)malloc(sizeof(GLuint) * textureNumber);
 	glGenTextures(textureNumber, &texID[0]);
 
@@ -50,6 +50,9 @@ void ShaderID::InitBitmap() {
 
 	glBindTexture(GL_TEXTURE_2D, texID[1]);
 	loadBMP_custom("models/flight.bmp");
+
+	glBindTexture(GL_TEXTURE_2D, texID[2]);
+	loadBMP_custom("models/flight_enemy.bmp");
 }
 
 void ShaderID::SetMetrices(Vec4& scale) {

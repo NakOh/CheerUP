@@ -13,6 +13,13 @@
 #include "vector" 
 #include "LinkedList.h"
 
+class EnemyVar {
+public:
+	int createTimer = 0;
+	int createMaxTimer = 1000;
+	EnemyVar() {}
+};
+
 class GameObjectManager {
 private:
 	LinkedList *eBullet;
@@ -21,6 +28,9 @@ private:
 
 	ShaderID shader;
 	Model* model;
+	
+	EnemyVar enemyVar;
+
 
 public:
 	Light* light;
@@ -29,6 +39,8 @@ public:
 	GameObjectManager();
 	void render();
 	void update(int delta);
+
+	void enemyUpdate(int delta);
 };
 
 #endif // !_GAMEOBJECTMANAGER_H_

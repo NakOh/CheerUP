@@ -60,7 +60,6 @@ protected:
 public:
 	GameObjectManager* manager;
 	int tag;
-
 	Model* body;
 
 	Transform transform;

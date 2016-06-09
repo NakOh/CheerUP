@@ -6,6 +6,8 @@ GameObjectManager::GameObjectManager() {
 	myBullet = new LinkedList();
 	enemys = new LinkedList();
 
+	enemyVar = EnemyVar();
+
 	shader = ShaderID();
 	model = new Model("models/flight.dat");
 
@@ -13,13 +15,33 @@ GameObjectManager::GameObjectManager() {
 	camera = new Camera();
 	light->Init(8, 20, -15);
 	camera->Init();
+}
 
-	Enemy* obj;
-	obj = new Enemy(model, this);
-	obj->transform.SetPosition(0, 0, 3);
-	obj->transform.Scalelation(2, 2, 2);
-	obj->transform.Rotation(100, 0, 0);
-	enemys->addFront(obj);
+void GameObjectManager::enemyUpdate(int delta) {
+	enemyVar.createTimer += delta;
+	if (enemyVar.createTimer > enemyVar.createMaxTimer) {
+		Enemy* obj;
+		obj = new Enemy(model, this);
+		enemys->addFront(obj);
+
+		enemyVar.createTimer -= enemyVar.createMaxTimer;
+	}
+
+	bool reFind = false;
+
+	Node* head = enemys->head;
+	for (int i = 0; i < enemys->size; i++) {
+		if (((Enemy*)head->get())->isDead) {
+			Node* rem = head;
+			//rem->remove();
+			//rem->deleteData();
+			//delete rem;
+		}
+		else {
+			head = head->next;
+		}
+
+	}
 }
 
 void GameObjectManager::addBullet() {
@@ -29,12 +51,14 @@ void GameObjectManager::addBullet() {
 }
 
 void GameObjectManager::render() {
-	if(eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->at(i)->get()), 0);
-	if (myBullet != nullptr) for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->at(i)->get()), 0);
-	if (enemys != nullptr) for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->at(i)->get()), 0);
+	if(eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->at(i)->get()), TEXTURE_CODE_PLAYER);
+	if (myBullet != nullptr) for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->at(i)->get()), TEXTURE_CODE_BULLET);
+	if (enemys != nullptr) for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->at(i)->get()), TEXTURE_CODE_ENEMY);
 }
+
 void GameObjectManager::update(int delta) {
 	if (eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->update(delta);
 	if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
 	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)		enemys->at(i)->get()->update(delta);
+	enemyUpdate(delta);
 }

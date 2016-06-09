@@ -5,14 +5,13 @@
 #include "Object.h"
 
 class Enemy : public GameObject {
+private:
+	int timer = 0;
+
 public:
 	virtual void update(int delta);
 	Enemy(Model* model, GameObjectManager* manager);
+	bool isDead = false;
 };
-
-class EnemyManager {
-	
-};
-
 
 #endif // ! __ENEMY_H__
