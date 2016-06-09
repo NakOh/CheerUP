@@ -58,7 +58,7 @@ void GameObjectManager::enemyShoot(int delta) {
 	if (enemys != nullptr) {
 		for (int i = 0; i < enemys->size; i++) {
 			if (dynamic_cast<Enemy*>(enemys->get(i))->bullet_createTimer > dynamic_cast<Enemy*>(enemys->get(i))->bullet_createMaxTimer) {
-				Bullet* bullet = new Bullet(model, this);
+				Bullet* bullet = new Bullet(sphereModel, this);
 				eBullet->addFront(bullet);
 				Vec4 pos = enemys->get(i)->transform.position;
 				bullet->transform.SetPosition(pos.x, pos.y, pos.z);

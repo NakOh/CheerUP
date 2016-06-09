@@ -1,115 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="shader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Body</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Body</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Body</Filter>
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="MyCharacter.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Body</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Body</Filter>
     </ClCompile>
     <ClCompile Include="ShaderID.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Map.cpp">
-=======
-    <ClCompile Include="MyCharacter.cpp">
->>>>>>> origin/Minsoo
-      <Filter>소스 파일</Filter>
+      <Filter>Body</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="shader.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LinkedList.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="TagHeader.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Light.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="ModelLoader.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MyCharacter.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="ShaderID.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Map.h">
-=======
-    <ClInclude Include="MyCharacter.h">
->>>>>>> origin/Minsoo
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="TagHeader.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.frag">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource</Filter>
     </None>
     <None Include="VertexShader.vert">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{eb5f0f7c-3fd9-4fa2-9d70-71f94bd401df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Body">
+      <UniqueIdentifier>{cc6edf21-532d-4c71-86c4-a039031ccf5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{15d3539e-dffc-42ea-a5f3-07ced3b5fb18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
