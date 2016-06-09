@@ -9,7 +9,6 @@
 #include "Matrix.h"
 #include <math.h>
 
-
 #include "GameObjectManager.h"
 
 using namespace std;

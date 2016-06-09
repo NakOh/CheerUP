@@ -123,6 +123,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Object.h" />

@@ -6,6 +6,7 @@
 #include "shader.hpp"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Map.h"
 #include "Matrix.h"
 #include "Light.h"
 #include <math.h>
@@ -27,8 +28,13 @@ private:
 	LinkedList *myBullet;
 	LinkedList *enemys;
 
+	Map* map2;
+	Map* map;
+
 	ShaderID shader;
 	Model* model;
+	Model* mapModel;
+	Model* sphereModel;
 	
 	EnemyVar enemyVar;
 	

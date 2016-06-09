@@ -58,7 +58,7 @@ public:
 	int texCoordID;
 
 	void Init();
-	void render(GameObject& obj, int textureNumber);
+	void render(GameObject& obj, int textureNumber, bool isPhong);
 	void setAspect(float as);
 };
 

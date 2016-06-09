@@ -40,6 +40,7 @@ namespace NameModels {
 		Vec4* faceNormalVector;
 		GLfloat* vertexNormalArray;
 		GLfloat* vertexCoordArray;
+		GLfloat* faceNormalArray;
 
 		Arrays() {}
 		~Arrays() {

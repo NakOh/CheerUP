@@ -41,7 +41,7 @@ GLuint loadBMP_custom(const char * imagepath) {
 }
 
 void ShaderID::InitBitmap() {
-	int textureNumber = 3;
+	int textureNumber = 4;
 	texID = (GLuint*)malloc(sizeof(GLuint) * textureNumber);
 	glGenTextures(textureNumber, &texID[0]);
 
@@ -53,6 +53,9 @@ void ShaderID::InitBitmap() {
 
 	glBindTexture(GL_TEXTURE_2D, texID[2]);
 	loadBMP_custom("models/flight_enemy.bmp");
+
+	glBindTexture(GL_TEXTURE_2D, texID[3]);
+	loadBMP_custom("models/basicMap.bmp");
 }
 
 void ShaderID::SetMetrices(Vec4& scale) {
@@ -116,7 +119,7 @@ void ShaderID::Init() {
 	ObjectInit();
 }
 
-void ShaderID::render(GameObject& obj, int textureNumber) {
+void ShaderID::render(GameObject& obj, int textureNumber, bool isPhong) {
 
 	SetMetrices(obj.transform.scale);
 
@@ -148,7 +151,8 @@ void ShaderID::render(GameObject& obj, int textureNumber) {
 
 	glVertexAttribPointer(vertexPositionID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->arrays.vertexPositionArray[0]);
 	glVertexAttribPointer(vertexColorID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->model.colordata[0]);
-	glVertexAttribPointer(vertexNormalID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->arrays.vertexNormalArray[0]);
+	if(isPhong)	glVertexAttribPointer(vertexNormalID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->arrays.vertexNormalArray[0]);
+	else glVertexAttribPointer(vertexNormalID, 4, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->arrays.faceNormalArray[0]);
 	glVertexAttribPointer(textureID, 2, GL_FLOAT, GL_FALSE, 0, (void*)&obj.body->arrays.vertexCoordArray[0]);
 
 	glDrawArrays(GL_TRIANGLES, 0, obj.body->model.faceCount * 3);

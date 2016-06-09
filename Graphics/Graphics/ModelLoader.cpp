@@ -66,12 +66,22 @@ Model* copyModel(Model* model) {
 		ret->model.colordata[i] = 1.0f;
 	}
 
+	ret->arrays.faceNormalVector = new Vec4[model->model.faceCount];
+	for (int i = 0; i < model->model.faceCount; i++) {
+		ret->arrays.faceNormalVector[i].x = model->arrays.faceNormalVector[i].x;
+		ret->arrays.faceNormalVector[i].y = model->arrays.faceNormalVector[i].y;
+		ret->arrays.faceNormalVector[i].z = model->arrays.faceNormalVector[i].z;
+		ret->arrays.faceNormalVector[i].w = model->arrays.faceNormalVector[i].w;
+	}
+
 	int count = model->model.faceCount * 3 * 4;
+	ret->arrays.faceNormalArray = new GLfloat[count];
 	ret->arrays.vertexPositionArray = new GLfloat[count];
 	ret->arrays.vertexNormalArray = new GLfloat[count];
 	ret->arrays.vertexCoordArray = new GLfloat[count];
 
 	for (int i = 0; i < count; i++) {
+		ret->arrays.faceNormalArray[i] = model->arrays.faceNormalArray[i];
 		ret->arrays.vertexPositionArray[i] = model->arrays.vertexPositionArray[i];
 		ret->arrays.vertexNormalArray[i] = model->arrays.vertexNormalArray[i];
 		ret->arrays.vertexCoordArray[i] = model->arrays.vertexCoordArray[i];
@@ -197,6 +207,13 @@ void Model::Setup_FaceNormalVector() {
 
 		arrays.faceNormalVector[i] = *Vec4::Cross(pos[1], pos[2]);
 		arrays.faceNormalVector[i].Normalize();
+
+		for (int k = 0; k < 3; k++) {
+			arrays.faceNormalArray[(i * 3 + k) * 4 + 0] = arrays.faceNormalVector[i].x;
+			arrays.faceNormalArray[(i * 3 + k) * 4 + 1] = arrays.faceNormalVector[i].y;
+			arrays.faceNormalArray[(i * 3 + k) * 4 + 2] = arrays.faceNormalVector[i].z;
+			arrays.faceNormalArray[(i * 3 + k) * 4 + 3] = 1;
+		}
 	}
 	for (int i = 0; i < 3; i++)	delete pos[i];
 	free(pos);
@@ -229,6 +246,7 @@ void Model::InitData() {
 	arrays.vertexPositionArray = new GLfloat[model.faceCount * 3 * 4];
 	arrays.vertexNormalArray = new GLfloat[model.faceCount * 3 * 4];
 	arrays.vertexCoordArray = new GLfloat[model.faceCount * 3 * 4];
+	arrays.faceNormalArray = new GLfloat[model.faceCount * 3 * 4];
 	arrays.faceNormalVector = new Vec4[model.faceCount];
 	Setup_VertexPositionToArray();
 	Setup_CoordinationToArray();

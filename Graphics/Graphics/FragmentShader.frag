@@ -35,7 +35,7 @@ void main() {
 	float diffusion = max(0.0, dot(L, N));
 	float specular = 0.0;
 	if(dot(L, N) > 0.0)	specular = max(0.0, dot(((2.0 * dot(L, N) * N) - L), V));
-	float shiness = 90.0;
+	float shiness = 10.0;
 	specular = max(0.0, pow(specular, shiness));
 	
 	float ac = 0.1;

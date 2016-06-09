@@ -6,10 +6,18 @@ GameObjectManager::GameObjectManager() {
 	myBullet = new LinkedList();
 	enemys = new LinkedList();
 
+
+
 	enemyVar = EnemyVar();
 
 	shader = ShaderID();
 	model = new Model("models/flight.dat");
+	mapModel = new Model("models/basicMap.dat");
+	sphereModel = new Model("models/sphere.dat");
+
+	map = new Map(mapModel, this);
+	map2 = new Map(mapModel, this);
+	map2->transform.SetPosition(0, 3, 7);
 
 	light = new Light();
 	camera = new Camera();
@@ -56,9 +64,11 @@ void GameObjectManager::addBullet() {
 }
 
 void GameObjectManager::render() {
-	if(eBullet != nullptr)		for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->get(i)), TEXTURE_CODE_PLAYER);
-	if (myBullet != nullptr)	for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->get(i)), TEXTURE_CODE_BULLET);
-	if (enemys != nullptr)		for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->get(i)), TEXTURE_CODE_ENEMY);
+	if(eBullet != nullptr)		for (int i = 0; i < eBullet->size; i++)		shader.render(*(eBullet->get(i)), TEXTURE_CODE_PLAYER, false);
+	if (myBullet != nullptr)	for (int i = 0; i < myBullet->size; i++)	shader.render(*(myBullet->get(i)), TEXTURE_CODE_BULLET, false);
+	if (enemys != nullptr)		for (int i = 0; i < enemys->size; i++)		shader.render(*(enemys->get(i)), TEXTURE_CODE_ENEMY, false);
+	shader.render(*map, TEXTURE_CODE_BASIC_MAP, true);
+	shader.render(*map2, TEXTURE_CODE_BASIC_MAP, true);
 }
 
 void GameObjectManager::update(int delta) {
@@ -66,4 +76,6 @@ void GameObjectManager::update(int delta) {
 	if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
 	if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)			enemys->at(i)->get()->update(delta);
 	enemyUpdate(delta);
+	map->update(delta);
+	map2->update(delta);
 }
