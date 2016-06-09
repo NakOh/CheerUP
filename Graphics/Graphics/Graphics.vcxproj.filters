@@ -51,7 +51,11 @@
     <ClCompile Include="ShaderID.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Map.cpp">
+=======
+    <ClCompile Include="MyCharacter.cpp">
+>>>>>>> origin/Minsoo
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +96,11 @@
     <ClInclude Include="ShaderID.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Map.h">
+=======
+    <ClInclude Include="MyCharacter.h">
+>>>>>>> origin/Minsoo
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

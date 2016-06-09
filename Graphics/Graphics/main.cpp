@@ -36,28 +36,22 @@ void KeyBoard(unsigned char key, int x, int y) {
 
 	switch (key) {
 	case 'w':
-		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y + 0.1f, obj->transform.position.z );
-		//Camera::pos.z += 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y + 0.1f, manager->myChar->transform.position.z );		
 		break;
 	case 'a':
-		//obj->transform.SetPosition(obj->transform.position.x - 0.1f, obj->transform.position.y, obj->transform.position.z);
-		//Camera::pos.x -= 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x - 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
 		break;
 	case 's':
-		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y - 0.1f, obj->transform.position.z);
-		//Camera::pos.z -= 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y - 0.1f, manager->myChar->transform.position.z);		
 		break;
 	case 'd':
-		//obj->transform.SetPosition(obj->transform.position.x + 0.1f, obj->transform.position.y, obj->transform.position.z);
-		//Camera::pos.x += 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);		
 		break;
 	case 'r':
-		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z + 0.1f);
-		//Camera::pos.y += 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z + 0.1f);
 		break;
 	case 'f':
-		//obj->transform.SetPosition(obj->transform.position.x, obj->transform.position.y, obj->transform.position.z - 0.1f);
-		//Camera::pos.y -= 0.1f;
+		manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z - 0.1f);
 		break;
 
 	case 'q'://카메라의 y 축 회전

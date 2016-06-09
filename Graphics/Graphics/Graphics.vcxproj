@@ -126,6 +126,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="MyCharacter.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="ShaderID.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="MyCharacter.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ShaderID.h" />
