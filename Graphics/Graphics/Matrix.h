@@ -18,6 +18,10 @@ public:
 	void Mul(float d);
 	void Divide(float d);
 
+	void rotX(float theta);
+	void rotY(float theta);
+	void rotZ(float theta);
+
 	bool isColl(Vec4& other, float dist);
 	//*
 	Vec4& operator=(Vec4& a);

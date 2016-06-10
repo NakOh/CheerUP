@@ -7,12 +7,18 @@
 class Enemy : public GameObject {
 private:
 	int timer = 0;
+	int deadTime = 20000;
 	int type;
-	int speed;
+
+	float _gradient;
 
 	void initType(int type);
 
+	void update_shoot(int delta);
+
 	Vec4 frontVec;
+
+	void addBullet(Vec4 vec);
 
 public:
 	virtual void update(int delta);

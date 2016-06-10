@@ -25,6 +25,14 @@ public:
 };
 
 
+class ModelBox {
+public:
+	Model* flight;
+	Model* map;
+	Model* sphere;
+	ModelBox();
+};
+
 
 class GameObjectManager {
 private:
@@ -32,9 +40,7 @@ private:
 	Map* map;
 
 	ShaderID shader;
-	Model* model;
-	Model* mapModel;
-	Model* sphereModel;
+
 	
 	EnemyVar enemyVar;
 	
@@ -43,7 +49,6 @@ private:
 
 	void enemyDestroy();
 	void enemyCreate(int delta);
-	void enemyShoot(int delta);
 
 public:
 	LinkedList *eBullet;
@@ -54,7 +59,7 @@ public:
 	Camera* camera;
 	MyCharacter* myChar;
 	
-
+	ModelBox models;
 
 	void addBullet();
 	GameObjectManager();

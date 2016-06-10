@@ -10,12 +10,11 @@ GameObjectManager::GameObjectManager() {
 	enemyVar = EnemyVar();
 
 	shader = ShaderID();
-	model = new Model("models/flight.dat");
-	mapModel = new Model("models/basicMap.dat");
-	sphereModel = new Model("models/sphere.dat");
 
-	map = new Map(mapModel, this);
-	map2 = new Map(mapModel, this);
+	models = ModelBox();
+
+	map = new Map(models.map, this);
+	map2 = new Map(models.map, this);
 	map2->transform.SetPosition(0, 3, 7);
 
 	light = new Light();
@@ -23,14 +22,14 @@ GameObjectManager::GameObjectManager() {
 	light->Init(8, 20, -15);
 	camera->Init();
 
-	myChar = new MyCharacter(model, this);
+	myChar = new MyCharacter(models.flight, this);
 }
 
 void GameObjectManager::enemyCreate(int delta) {
 	enemyVar.createTimer += delta;
 	if (enemyVar.createTimer > enemyVar.createMaxTimer) {
 		Enemy* obj;
-		obj = new Enemy(model, this);		
+		obj = new Enemy(models.flight, this);
 		enemys->addBack(obj);
 		enemyVar.createTimer -= enemyVar.createMaxTimer;
 	}
@@ -91,32 +90,20 @@ void GameObjectManager::myBulletDestroy() {
 	}
 }
 
-void GameObjectManager::enemyShoot(int delta) {
-	if (enemys != nullptr) {
-		for (int i = 0; i < enemys->size; i++) {
-			if (dynamic_cast<Enemy*>(enemys->get(i))->bullet_createTimer > dynamic_cast<Enemy*>(enemys->get(i))->bullet_createMaxTimer) {
-				EnemyBullet* bullet = new EnemyBullet(sphereModel, this);
-				eBullet->addFront(bullet);
-				Vec4 pos = enemys->get(i)->transform.position;
-				bullet->transform.SetPosition(pos.x, pos.y, pos.z);
-				bullet->transform.SetScale(0.2f, 0.2f, 0.2f);
-				dynamic_cast<Enemy*>(enemys->get(i))->bullet_createTimer -= dynamic_cast<Enemy*>(enemys->get(i))->bullet_createMaxTimer;
-			}
-			else {
-				dynamic_cast<Enemy*>(enemys->get(i))->bullet_createTimer += delta;
-			}
-		}
-	}
+
+ModelBox::ModelBox() {
+	flight = new Model("models/flight.dat");
+	map = new Model("models/basicMap.dat");
+	sphere = new Model("models/sphere.dat");
 }
 
 void GameObjectManager::enemyUpdate(int delta) {
 	enemyCreate(delta);
-	enemyShoot(delta);
 	enemyDestroy();
 }
 
 void GameObjectManager::addBullet() {
-	Bullet* bullet = new Bullet(sphereModel, this);
+	Bullet* bullet = new Bullet(models.sphere, this);
 	Vec4 pos = myChar->transform.position;
 	bullet->transform.SetPosition(pos.x, pos.y, pos.z);
 	bullet->transform.SetScale(0.2f, 0.2f, 0.2f);

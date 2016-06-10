@@ -23,6 +23,10 @@ Vec4 getMaping(float x, float y) {
 	return pos;
 }
 
+Vec4 getReverseMaping(Vec4 pos) {
+	return Vec4(pos.x, pos.y - 5, 0, 0);
+}
+
 ///*
 int ParseCount(char* strVertex) {
 	char* context;

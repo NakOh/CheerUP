@@ -99,6 +99,46 @@ Vec4 operator*(float a, Vec4 ref) {
 }
 //*/
 
+
+void Vec4::rotX(float theta) {
+	Matrix3 r = Matrix3();
+	float sinT = sin(theta);
+	r.d[0][0] = 1;
+	r.d[2][2] = r.d[1][1] = cos(theta);
+	r.d[2][1] = sinT;
+	r.d[1][2] = -sinT;
+
+	x = x;
+	y = y * r.d[1][1] + z * r.d[1][2];
+	z = y * r.d[2][1] + z * r.d[2][2];
+}
+
+void Vec4::rotY(float theta) {
+	Matrix3 r = Matrix3();
+	float sinT = sin(theta);
+	r.d[1][1] = 1;
+	r.d[0][0] = r.d[2][2] = cos(theta);
+	r.d[0][2] = sinT;
+	r.d[2][0] = -sinT;
+
+	x = x * r.d[0][0] + z * r.d[0][2];
+	y = y;
+	z = x * r.d[2][0] + z * r.d[2][2];
+}
+
+void Vec4::rotZ(float theta) {
+	Matrix3 r = Matrix3();
+	float sinT = sin(theta);
+	r.d[2][2] = 1;
+	r.d[0][0] = r.d[1][1] = cos(theta);
+	r.d[1][0] = sinT;
+	r.d[0][1] = -sinT;
+
+	x = x * r.d[0][0] + y * r.d[0][1];
+	y = x * r.d[1][0] + y * r.d[1][1];
+	z = z;
+}
+
 bool Vec4::isColl(Vec4& other, float dist) {
 	float dx = other.x - x;
 	float dy = other.y - y;

@@ -14,6 +14,7 @@ class GameObjectManager;
 
 Vec4 getMoveMaping(float x, float y);
 Vec4 getMaping(float x, float y);
+Vec4 getReverseMaping(Vec4 pos);
 
 class Transform {
 private:
