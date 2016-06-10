@@ -46,12 +46,26 @@ void MyCharacter::checkColl() {
 	for (int i = 0; i < manager->eBullet->size; i++) {
 		if (head->get()->transform.position.isColl(transform.position, 0.2)) {
 			isDead = true;
+			((EnemyBullet*)(head->get()))->isDead = true;
 			break;
 		} else {
 			head = head->next;
 		}
 	}
 
+	head = manager->enemys->head;
+
+	for (int i = 0; i < manager->enemys->size; i++) {
+		if (head->get()->transform.position.isColl(transform.position, 0.4)) {
+			isDead = true;
+			((Enemy*)(head->get()))->isDead = true;
+			break;
+		} else {
+			head = head->next;
+		}
+	}
+
+	/*
 	head = manager->rocks->head;
 	for (int i = 0; i < manager->rocks->size; i++) {
 		if (head->get()->transform.position.isColl(transform.position, 0.2)) {
@@ -62,6 +76,7 @@ void MyCharacter::checkColl() {
 			head = head->next;
 		}
 	}
+	*/
 
 }
 

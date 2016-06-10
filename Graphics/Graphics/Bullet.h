@@ -11,6 +11,8 @@ private:
 public:
 	bool isDead = false;
 	virtual void update(int delta);
+
+	void checkColl();
 	Bullet(Model* model, GameObjectManager* manager);
 };
 
