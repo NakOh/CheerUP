@@ -14,6 +14,8 @@ class MyCharacter : public GameObject {
 private:
 	int skill_Timer = 0;
 
+	void update_velocity(int delta);
+
 public:
 	Input input;
 	Vec4 velocity;

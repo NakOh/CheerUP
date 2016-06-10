@@ -69,7 +69,7 @@ Vec4::Vec4(float a, float b, float c, float d) {
 	w = d;
 }
 
-void Vec4::Normalize() {
+void Vec4::normalize() {
 	float dist = sqrt(x * x + y * y + z * z);
 	x = x / dist;
 	y = y / dist;

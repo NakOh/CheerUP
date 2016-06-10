@@ -206,7 +206,7 @@ void Model::Setup_FaceNormalVector() {
 		pos[2]->Sub(*pos[0]);
 
 		arrays.faceNormalVector[i] = *Vec4::Cross(pos[1], pos[2]);
-		arrays.faceNormalVector[i].Normalize();
+		arrays.faceNormalVector[i].normalize();
 
 		for (int k = 0; k < 3; k++) {
 			arrays.faceNormalArray[(i * 3 + k) * 4 + 0] = arrays.faceNormalVector[i].x;
@@ -228,7 +228,7 @@ void Model::Setup_VertexNormalVector() {
 	}
 
 	for (int i = 0; i < model.vertexCount; i++) {
-		model.vertices[i].sum_normal.Normalize();
+		model.vertices[i].sum_normal.normalize();
 	}
 
 	for (int i = 0; i < model.faceCount; i++) {

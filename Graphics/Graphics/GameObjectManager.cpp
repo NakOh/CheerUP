@@ -54,6 +54,9 @@ void GameObjectManager::enemyDestroy() {
 	}
 }
 
+
+
+
 void GameObjectManager::eBulletDestroy() {
 	bool reFind = true;
 	while (reFind) {

@@ -6,9 +6,8 @@ Input::Input() {
 	left = right = up = down = false;
 }
 
-void MyCharacter::update(int delta) {	
-	skill_Timer += delta;
 
+void MyCharacter::update_velocity(int delta) {
 	if (input.up)		velocity.y += 0.005 * delta;
 	if (input.down)		velocity.y -= 0.005 * delta;
 	if (input.left)		velocity.x -= 0.005 * delta;
@@ -18,8 +17,14 @@ void MyCharacter::update(int delta) {
 	if (velocity.y < -1)	velocity.y = -1;
 	if (velocity.x > 1)		velocity.x = 1;
 	if (velocity.x < -1)	velocity.x = -1;
+}
 
-	transform.Translation(velocity.x * delta * 0.005, velocity.y * delta * 0.005, velocity.y * delta * 0.005 * 0.3);
+void MyCharacter::update(int delta) {	
+	skill_Timer += delta;
+
+	update_velocity(delta);
+
+	transform.Translation(getMoveMaping(velocity.x * delta * 0.005, velocity.y * delta * 0.005));
 
 	for (int i = 0; i < delta; i++) {
 		velocity.x *= 0.995;
@@ -46,7 +51,7 @@ void MyCharacter::checkColl() {
 
 MyCharacter::MyCharacter(Model* model, GameObjectManager* manager) {
 	init_GameObject(model, manager, TAG_PLAYER);
-	transform.SetPosition(0, -1.6, 4.02);
+	transform.SetPosition(getMaping(0, -1.5));
 	//myChar->transform.Rotation(0, 0, 90.f);
 	velocity = Vec4();
 	transform.Rotation(-PI * 0.4017f, PI * 0.5f, 0);

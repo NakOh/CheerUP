@@ -24,6 +24,8 @@ public:
 	EnemyVar() {}
 };
 
+
+
 class GameObjectManager {
 private:
 	Map* map2;
@@ -52,6 +54,7 @@ public:
 	Camera* camera;
 	MyCharacter* myChar;
 	
+
 
 	void addBullet();
 	GameObjectManager();

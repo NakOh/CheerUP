@@ -13,6 +13,15 @@
 
 using namespace std;
 
+Vec4 getMoveMaping(float x, float y) {
+	return Vec4(x, y, y * 0.3, 0);
+}
+
+Vec4 getMaping(float x, float y) {
+	Vec4 pos = Vec4(0, 5, 6, 0);
+	pos = pos + getMoveMaping(x, -5 + y);
+	return pos;
+}
 
 ///*
 int ParseCount(char* strVertex) {
@@ -47,6 +56,10 @@ GameObject::GameObject(Model* model, GameObjectManager* manager, int tag) {
 
 GameObject::~GameObject() {
 	delete body;
+}
+
+void Transform::SetPosition(Vec4 pos) {
+	SetPosition(pos.x, pos.y, pos.z);
 }
 
 void Transform::SetPosition(float x, float y, float z) {
@@ -102,6 +115,10 @@ void Transform::Translation(float x, float y, float z) {
 			gameObject->body->arrays.vertexPositionArray[(i * 3 + k) * 4 + 3] = 1;
 		}
 	}
+}
+
+void Transform::Translation(Vec4 vec) {
+	Translation(vec.x, vec.y, vec.z);
 }
 
 void Transform::Rotation(float x, float y, float z) {

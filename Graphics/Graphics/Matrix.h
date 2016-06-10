@@ -11,7 +11,7 @@ public:
 	static Vec4* Cross(Vec4* a, Vec4* b);
 	Vec4();
 	Vec4(float a, float b, float c, float d);
-	void Normalize();
+	void normalize();
 	void Add(Vec4& other);
 	void Add(float x, float y, float z);
 	void Sub(Vec4& other);

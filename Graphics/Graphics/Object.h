@@ -12,6 +12,9 @@ using namespace std;
 class GameObject;
 class GameObjectManager;
 
+Vec4 getMoveMaping(float x, float y);
+Vec4 getMaping(float x, float y);
+
 class Transform {
 private:
 	void Init() {
@@ -33,8 +36,10 @@ public:
 	Vec4 scale;
 
 	void SetPosition(float x, float y, float z);
+	void SetPosition(Vec4 vec);
 	void SetScale(float x, float y, float z);
 	void Translation(float x, float y, float z);
+	void Translation(Vec4 vec);
 	void Scalelation(float x, float y, float z);
 
 	void Rotation(float x, float y, float z);
