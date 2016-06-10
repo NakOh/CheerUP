@@ -24,7 +24,13 @@ public:
 	EnemyVar() {}
 };
 
-
+class RockVar {
+public:
+	int createTimer = 0;
+	int createMAxTimer = 1000;
+	float createRange_X = 8;
+	RockVar() {}
+};
 
 class GameObjectManager {
 private:
