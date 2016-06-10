@@ -5,8 +5,13 @@ GameObjectManager::GameObjectManager() {
 	myBullet = new LinkedList();
 	enemys = new LinkedList();
 
-	enemyVar = EnemyVar();
+
 	shakingVar = ShakingVar(this);
+	rocks = new LinkedList();
+
+
+	enemyVar = EnemyVar();
+	rockVar = RockVar();
 	shader = ShaderID();
 
 	models = ModelBox();
@@ -33,6 +38,18 @@ void GameObjectManager::enemyCreate(int delta) {
 	}
 }
 
+void GameObjectManager::rockCreate(int delta) {
+	rockVar.createTimer += delta;
+	if (rockVar.createTimer > rockVar.createMaxTimer) {
+		Rock* obj;
+		obj = new Rock(models.sphere, this);
+		obj->transform.SetScale(0.2f, 0.2f, 0.2f);
+		rocks->addBack(obj);
+		
+		rockVar.createTimer -= rockVar.createMaxTimer;
+	}
+}
+
 void GameObjectManager::enemyDestroy() {
 	bool reFind = true;
 	while (reFind) {
@@ -41,7 +58,6 @@ void GameObjectManager::enemyDestroy() {
 		for (int i = 0; i < enemys->size; i++) {
 			if (((Enemy*)head->get())->isDead) {
    				enemys->remove(i);
-				//reFind = true;
 				break;
 			}
 			else {
@@ -50,8 +66,6 @@ void GameObjectManager::enemyDestroy() {
 		}
 	}
 }
-
-
 
 
 void GameObjectManager::eBulletDestroy() {
@@ -65,6 +79,24 @@ void GameObjectManager::eBulletDestroy() {
 				//reFind = true;
 				break;
 			} else {
+				head = head->next;
+			}
+		}
+	}
+}
+
+void GameObjectManager::rockDestroy() {
+	bool reFind = true;
+	while (reFind) {
+		reFind = false;
+		Node* head = rocks->head;
+		for (int i = 0; i < rocks->size; i++) {
+			if (((Rock*)head->get())->isDead) {
+				rocks->remove(i);
+				//reFind = true;
+				break;
+			}
+			else {
 				head = head->next;
 			}
 		}
@@ -101,6 +133,11 @@ void GameObjectManager::enemyUpdate(int delta) {
 	enemyDestroy();
 }
 
+void GameObjectManager::rockUpdate(int delta) {
+	rockCreate(delta);
+	rockDestroy();
+}
+
 void GameObjectManager::addBullet() {
 	Bullet* bullet = new Bullet(models.sphere, this);
 	Vec4 pos = myChar->transform.position;
@@ -116,6 +153,7 @@ void GameObjectManager::render() {
 		if(((Enemy*)(enemys->get(i)))->type == TYPE_DEFENSE)	shader.render(*(enemys->get(i)), TEXTURE_CODE_HELLY, false);
 		else shader.render(*(enemys->get(i)), TEXTURE_CODE_ENEMY, false);
 	}
+	if (rocks != nullptr)		for (int i = 0; i < rocks->size; i++)		shader.render(*(rocks->get(i)), TEXTURE_CODE_ENEMY, false);
 	shader.render(*map, TEXTURE_CODE_BASIC_MAP, true);
 	shader.render(*map2, TEXTURE_CODE_BASIC_MAP, true);
 	shader.render(*myChar, TEXTURE_CODE_PLAYER, false);
@@ -130,7 +168,9 @@ void GameObjectManager::update(int delta) {
 		if (eBullet != nullptr)  for (int i = 0; i < eBullet->size; i++)		eBullet->at(i)->get()->update(delta);
 		if (myBullet != nullptr)  for (int i = 0; i < myBullet->size; i++)		myBullet->at(i)->get()->update(delta);
 		if (enemys != nullptr)  for (int i = 0; i < enemys->size; i++)			enemys->at(i)->get()->update(delta);
+		if (rocks != nullptr)  for (int i = 0; i < rocks->size; i++)			rocks->at(i)->get()->update(delta);
 		enemyUpdate(delta);
+		rockUpdate(delta);
 		map->update(delta);
 		map2->update(delta);
 		myChar->update(delta);
