@@ -9,6 +9,11 @@ private:
 	int timer = 0;
 	int type;
 	int speed;
+
+	void initType(int type);
+
+	Vec4 frontVec;
+
 public:
 	virtual void update(int delta);
 	Enemy(Model* model, GameObjectManager* manager);

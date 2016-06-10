@@ -16,6 +16,8 @@ private:
 
 	void update_velocity(int delta);
 
+	float _gradient = 0;
+
 public:
 	Input input;
 	Vec4 velocity;

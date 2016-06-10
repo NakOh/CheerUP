@@ -17,6 +17,11 @@ void MyCharacter::update_velocity(int delta) {
 	if (velocity.y < -1)	velocity.y = -1;
 	if (velocity.x > 1)		velocity.x = 1;
 	if (velocity.x < -1)	velocity.x = -1;
+
+
+	transform.Rotation(0, -_gradient, 0);
+	_gradient = velocity.x * 0.3;
+	transform.Rotation(0, _gradient, 0);
 }
 
 void MyCharacter::update(int delta) {	
