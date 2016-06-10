@@ -2,7 +2,11 @@
 
 
 void Rock::update(int delta) {
-
+	timer += delta;
+	if (30000 < timer) {
+		isDead = true;
+	}
+	transform.Translation(0, -0.001 * delta, -0.001 * delta * 0.4);
 }
 
 
@@ -14,7 +18,3 @@ Rock::Rock(Model* model, GameObjectManager* manager)
 }
 
 
-
-Rock::~Rock()
-{
-}

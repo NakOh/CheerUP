@@ -129,6 +129,7 @@
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="MyCharacter.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Rock.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="ShaderID.cpp" />
   </ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="MyCharacter.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Rock.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ShaderID.h" />
     <ClInclude Include="TagHeader.h" />

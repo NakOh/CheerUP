@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "shader.hpp"
 #include "Enemy.h"
+#include "Rock.h"
 #include "MyCharacter.h"
 #include "Bullet.h"
 #include "EnemyBullet.h"
@@ -27,7 +28,7 @@ public:
 class RockVar {
 public:
 	int createTimer = 0;
-	int createMAxTimer = 1000;
+	int createMaxTimer = 2000;
 	float createRange_X = 8;
 	RockVar() {}
 };
@@ -43,6 +44,7 @@ private:
 	Model* sphereModel;
 	
 	EnemyVar enemyVar;
+	RockVar rockVar;
 	
 	void eBulletDestroy();
 	void myBulletDestroy();
@@ -51,10 +53,14 @@ private:
 	void enemyCreate(int delta);
 	void enemyShoot(int delta);
 
+	void rockDestroy();
+	void rockCreate(int delta);
+	
 public:
 	LinkedList *eBullet;
 	LinkedList *myBullet;
 	LinkedList *enemys;
+	LinkedList *rocks;
 
 	Light* light;
 	Camera* camera;
@@ -68,6 +74,7 @@ public:
 	void update(int delta);
 
 	void enemyUpdate(int delta);
+	void rockUpdate(int delta);
 };
 
 #endif // !_GAMEOBJECTMANAGER_H_

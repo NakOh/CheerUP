@@ -51,6 +51,18 @@ void MyCharacter::checkColl() {
 			head = head->next;
 		}
 	}
+
+	head = manager->rocks->head;
+	for (int i = 0; i < manager->rocks->size; i++) {
+		if (head->get()->transform.position.isColl(transform.position, 0.2)) {
+			isDead = true;
+			break;
+		}
+		else {
+			head = head->next;
+		}
+	}
+
 }
 
 
