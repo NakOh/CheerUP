@@ -42,8 +42,7 @@ void GameObjectManager::rockCreate(int delta) {
 	rockVar.createTimer += delta;
 	if (rockVar.createTimer > rockVar.createMaxTimer) {
 		Rock* obj;
-		obj = new Rock(models.sphere, this);
-		obj->transform.SetScale(0.2f, 0.2f, 0.2f);
+		obj = new Rock(models.rock, this);
 		rocks->addBack(obj);
 		
 		rockVar.createTimer -= rockVar.createMaxTimer;
@@ -126,6 +125,7 @@ ModelBox::ModelBox() {
 	map = new Model("models/basicMap.dat");
 	sphere = new Model("models/sphere.dat");
 	helly = new Model("models/helly.dat");
+	rock = new Model("models/rock.dat");
 }
 
 void GameObjectManager::enemyUpdate(int delta) {
@@ -153,7 +153,7 @@ void GameObjectManager::render() {
 		if(((Enemy*)(enemys->get(i)))->type == TYPE_DEFENSE)	shader.render(*(enemys->get(i)), TEXTURE_CODE_HELLY, false);
 		else shader.render(*(enemys->get(i)), TEXTURE_CODE_ENEMY, false);
 	}
-	if (rocks != nullptr)		for (int i = 0; i < rocks->size; i++)		shader.render(*(rocks->get(i)), TEXTURE_CODE_ENEMY, false);
+	if (rocks != nullptr)		for (int i = 0; i < rocks->size; i++)		shader.render(*(rocks->get(i)), TEXTURE_CODE_ROCK, true);
 	shader.render(*map, TEXTURE_CODE_BASIC_MAP, true);
 	shader.render(*map2, TEXTURE_CODE_BASIC_MAP, true);
 	shader.render(*myChar, TEXTURE_CODE_PLAYER, false);

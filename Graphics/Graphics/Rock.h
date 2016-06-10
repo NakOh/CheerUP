@@ -7,7 +7,7 @@
 class Rock : public GameObject{
 private:
 	int timer = 0;
-
+	Vec4 randRot;
 public:
 	bool isDead = false;
 	virtual void update(int delta);

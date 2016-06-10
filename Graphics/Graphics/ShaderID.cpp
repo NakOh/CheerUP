@@ -41,7 +41,7 @@ GLuint loadBMP_custom(const char * imagepath) {
 }
 
 void ShaderID::InitBitmap() {
-	int textureNumber = 8;
+	int textureNumber = 9;
 	texID = (GLuint*)malloc(sizeof(GLuint) * textureNumber);
 	glGenTextures(textureNumber, &texID[0]);
 
@@ -68,6 +68,9 @@ void ShaderID::InitBitmap() {
 
 	glBindTexture(GL_TEXTURE_2D, texID[7]);
 	loadBMP_custom("models/helly.bmp");
+
+	glBindTexture(GL_TEXTURE_2D, texID[8]);
+	loadBMP_custom("models/rock.bmp");
 }
 
 void ShaderID::SetMetrices(Vec4& scale) {

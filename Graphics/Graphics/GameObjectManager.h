@@ -54,6 +54,7 @@ public:
 	Model* map;
 	Model* sphere;
 	Model* helly;
+	Model* rock;
 	ModelBox();
 };
 
