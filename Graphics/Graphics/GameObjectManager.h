@@ -16,6 +16,8 @@
 #include "vector" 
 #include "LinkedList.h"
 
+class GameObjectManager;
+
 class EnemyVar {
 public:
 	int createTimer = 0;
@@ -24,12 +26,33 @@ public:
 	EnemyVar() {}
 };
 
+class ShakingVar {
+private:
+	GameObjectManager* manager;
+	bool isShaking = false;
+	Vec4 velocity, pos;
+	int timer = 0;
+	int maxTimer = 500;
+public:
+	ShakingVar() {}
+	ShakingVar(GameObjectManager* manager) {
+		this->manager = manager;
+		velocity = Vec4();
+		pos = Vec4();
+	}
+	void update(int delta);
+	void startShaking() {
+		isShaking = true;
+	}
+};
+
 
 class ModelBox {
 public:
 	Model* flight;
 	Model* map;
 	Model* sphere;
+	Model* helly;
 	ModelBox();
 };
 
@@ -41,7 +64,7 @@ private:
 
 	ShaderID shader;
 
-	
+	ShakingVar shakingVar;
 	EnemyVar enemyVar;
 	
 	void eBulletDestroy();
@@ -67,6 +90,8 @@ public:
 	void update(int delta);
 
 	void enemyUpdate(int delta);
+
+	void shakingCamera();
 };
 
 #endif // !_GAMEOBJECTMANAGER_H_

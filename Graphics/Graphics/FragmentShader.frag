@@ -38,7 +38,7 @@ void main() {
 	float shiness = 10.0;
 	specular = max(0.0, pow(specular, shiness));
 	
-	float ac = 0.1;
+	float ac = 0.5;
 	float dc = 0.6;
 	float sc = 1.0;
 
@@ -52,6 +52,7 @@ void main() {
 
 	vec4 texColor = texture2D(tex, fragTexCoord);
 	vec4 phongColor = fragColor * (ac * ambient + dc * diffusion + sc * specular);
+
 	gl_FragColor = phongColor * texColor;
 
 }

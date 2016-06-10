@@ -41,7 +41,7 @@ GLuint loadBMP_custom(const char * imagepath) {
 }
 
 void ShaderID::InitBitmap() {
-	int textureNumber = 7;
+	int textureNumber = 8;
 	texID = (GLuint*)malloc(sizeof(GLuint) * textureNumber);
 	glGenTextures(textureNumber, &texID[0]);
 
@@ -65,6 +65,9 @@ void ShaderID::InitBitmap() {
 
 	glBindTexture(GL_TEXTURE_2D, texID[6]);
 	loadBMP_custom("models/color_blue.bmp");
+
+	glBindTexture(GL_TEXTURE_2D, texID[7]);
+	loadBMP_custom("models/helly.bmp");
 }
 
 void ShaderID::SetMetrices(Vec4& scale) {

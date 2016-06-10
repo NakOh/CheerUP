@@ -68,12 +68,9 @@ void Enemy::update_shoot(int delta) {
 		} else {
 			bullet_createTimer += delta;
 		}
-	} else {
+	} else if (type == TYPE_MIX){
 		if (bullet_createTimer > bullet_createMaxTimer) {
-			EnemyBullet* bullet = new EnemyBullet(manager->models.sphere, manager);
-			manager->eBullet->addFront(bullet);
-			bullet->transform.SetPosition(transform.position);
-			bullet->transform.SetScale(0.2f, 0.2f, 0.2f);
+			addBullet(getMoveMaping(0, -3));
 			bullet_createTimer -= bullet_createMaxTimer;
 		} else {
 			bullet_createTimer += delta;
@@ -90,7 +87,7 @@ void Enemy::initType(int type) {
 		charPos = transform.position - charPos;
 		transform.Rotation(0, charPos.x / charPos.y, 0);
 		charPos.normalize();
-		frontVec = charPos * 0.005;
+		frontVec = charPos * 0.009;
 	}else if (type == TYPE_DEFENSE) {
 		bullet_createMaxTimer = 800;
 		deadTime = 2000;
@@ -98,12 +95,18 @@ void Enemy::initType(int type) {
 }
 
 Enemy::Enemy(Model* model, GameObjectManager* manager) {
-	init_GameObject(model, manager, TAG_ENEMY);
+	int thistype = rand() % 3;
+	if (thistype == TYPE_DEFENSE) {
+		init_GameObject(manager->models.helly, manager, TAG_ENEMY);
+		transform.Rotation(0, PI * 0.5f, 0);
+		transform.SetScale(1.2f, 1.2f, 1.2f);
+	} else {
+		init_GameObject(model, manager, TAG_ENEMY);
+	}
 	float pos = 2.5f - ((float)(rand() % 100)) / 20;
 	bullet_createMaxTimer = rand() % 1000 + 1000; //여기서 바꾸면 총알 주기가 달라진다.
 	transform.SetPosition(getMaping(pos, 5));
 	transform.Rotation(-PI * 0.4f, -PI * 0.5f, 0);
-	initType(TYPE_DEFENSE);
-
+	initType(thistype);
 }
 

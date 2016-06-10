@@ -52,6 +52,7 @@ void KeyBoard(unsigned char key, int x, int y) {
 		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x + 0.1f, manager->myChar->transform.position.y, manager->myChar->transform.position.z);
 		break;
 	case 'r':
+		manager->shakingCamera();
 		//manager->myChar->transform.SetPosition(manager->myChar->transform.position.x, manager->myChar->transform.position.y, manager->myChar->transform.position.z + 0.1f);
 		break;
 	case 'f':
@@ -126,7 +127,9 @@ void myGLInit() {
 	glutKeyboardFunc(KeyBoard);
 	glutKeyboardUpFunc(KeyBoardUp);
 	manager = new GameObjectManager();
-
+	
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);

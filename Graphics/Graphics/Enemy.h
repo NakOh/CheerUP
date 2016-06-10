@@ -8,7 +8,6 @@ class Enemy : public GameObject {
 private:
 	int timer = 0;
 	int deadTime = 20000;
-	int type;
 
 	float _gradient;
 
@@ -21,6 +20,7 @@ private:
 	void addBullet(Vec4 vec);
 
 public:
+	int type;
 	virtual void update(int delta);
 	Enemy(Model* model, GameObjectManager* manager);
 	bool isDead = false;
